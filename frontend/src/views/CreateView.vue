@@ -1,46 +1,34 @@
-<!-- views/CreateView.vue -->
+<script setup>
+import { ref } from 'vue'
+import { useArticleStore } from '@/stores/articles' // articles 스토어 임포트
+
+const title = ref('')
+const content = ref('')
+
+const articleStore = useArticleStore() // articles 스토어 사용
+
+const createNewArticle = function () {
+  const payload = {
+    title: title.value,
+    content: content.value
+  }
+  articleStore.createArticle(payload) // createArticle 함수 호출
+}
+</script>
 
 <template>
   <div>
     <h1>게시글 작성</h1>
-    <form @submit.prevent="createArticle">
-      <label for="title">제목 : </label>
+    <form @submit.prevent="createNewArticle">
+      <label for="title">제목:</label>
       <input type="text" id="title" v-model.trim="title"><br>
-      <label for="content">내용 : </label>
+      <label for="content">내용:</label>
       <textarea id="content" v-model.trim="content"></textarea><br>
-      <input type="submit">
+      <input type="submit" value="작성">
     </form>
   </div>
 </template>
 
-<script setup>
-import axios from 'axios'
-import { ref } from 'vue'
-import { useArticleStore } from '@/stores/articles'
-import { useRouter } from 'vue-router'
-
-const store = useArticleStore()
-const router = useRouter()
-
-const title = ref(null)
-const content = ref(null)
-
-const createArticle = function () {
-  axios({
-    method: 'post',
-    url: `${store.API_URL}/api/v1/articles/`,
-    data: {
-      title: title.value,
-      content: content.value
-    },
-  })
-    .then(() => {
-      router.push({name: 'ArticleView'})
-    })
-    .catch(err => console.log(err))
-}
-</script>
-
-<style>
+<style scoped>
 
 </style>

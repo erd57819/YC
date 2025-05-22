@@ -34,5 +34,4 @@ def article_detail(request, article_pk):
 
     if request.method == 'GET':
         serializer = ArticleSerializer(article)
-        print(serializer.data)
         return Response(serializer.data)

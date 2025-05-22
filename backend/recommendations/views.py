@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from products.models import FinancialProduct, ProductOption
 from products.serializers import FinancialProductListSerializer # 상품 목록 시리얼라이저 재활용
 from django.contrib.auth import get_user_model
+from django.db import models
 
 User = get_user_model()
 

@@ -1,5 +1,3 @@
-// frontend/src/router/index.js
-
 import { createRouter, createWebHistory } from 'vue-router'
 import ArticleView from '@/views/ArticleView.vue'
 import DetailView from '@/views/DetailView.vue'
@@ -72,12 +70,12 @@ const router = createRouter({
     {
       path: '/products/deposit',
       name: 'DepositListView',
-      // component: () => import('@/views/products/DepositListView.vue') 
+      component: () => import('@/views/products/DepositListView.vue') 
     },
     {
       path: '/products/deposit/:productId',
       name: 'DepositDetailView',
-      // component: () => import('@/views/products/DepositDetailView.vue')
+      component: () => import('@/views/products/DepositDetailView.vue')
     },
   ]
 })

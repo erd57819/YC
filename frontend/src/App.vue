@@ -17,7 +17,11 @@
               <RouterLink class="nav-link" :to="{ name: 'ArticleView' }">게시판</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink class="nav-link" :to="{ name: 'DepositListView' }">예적금 비교</RouterLink> </li>
+              <RouterLink class="nav-link" :to="{ name: 'DepositListView' }">예적금 비교</RouterLink>
+            </li>
+            <li class="nav-item">
+              <RouterLink class="nav-link" :to="{ name: 'BankMapView' }">은행 찾기</RouterLink>
+            </li>
             <li class="nav-item" v-if="accountStore.isLogin">
               <RouterLink class="nav-link" :to="{ name: 'CreateView' }">글쓰기</RouterLink>
             </li>
@@ -35,7 +39,7 @@
               </RouterLink>
             </li>
             <li class="nav-item" v-if="accountStore.isLogin">
-              <a class="nav-link" href="#" @click.prevent="accountStore.logOut">로그아웃</a>
+              <a class="nav-link" href="#" @click.prevent="handleLogout">로그아웃</a>
             </li>
           </ul>
         </div>
@@ -62,25 +66,32 @@ import { onMounted } from 'vue';
 const accountStore = useAccountStore()
 const router = useRouter()
 
-// 앱이 마운트될 때 토큰이 있고 사용자 정보가 없다면 가져오기
-// (라우터 가드에서도 처리하지만, 초기 로드 시 한 번 더 확인 가능)
+// 로그아웃 핸들러 함수
+const handleLogout = async () => {
+  try {
+    await accountStore.logOut();
+    // 로그아웃 후 메인 페이지 또는 로그인 페이지로 리디렉션
+    router.push({ name: 'MainPageView' }); // 또는 LogInView
+  } catch (error) {
+    console.error('로그아웃 실패:', error);
+    // 필요한 경우 사용자에게 오류 메시지 표시
+  }
+};
+
 onMounted(async () => {
   if (accountStore.token && !accountStore.currentUser) {
     try {
       await accountStore.getUserProfile();
     } catch (error) {
       console.error("Failed to fetch user profile on app mount:", error);
-      // 여기서도 에러 발생 시 로그인 페이지로 리다이렉트 또는 로그아웃 처리 가능
       if (error.response && (error.response.status === 401 || error.response.status === 403)) {
-        accountStore.logOut();
+        // 토큰이 유효하지 않으면 로그아웃 처리 후 로그인 페이지로 이동
+        await accountStore.logOut(); // logOut이 Promise를 반환하도록 수정했으므로 await 사용 가능
         router.push({ name: 'LogInView' });
       }
     }
   }
 });
-
-// 로고 이미지 예시 (실제 이미지를 assets 폴더에 추가해야 함)
-// import bankLogo from '@/assets/bank_logo.png' // 스크립트에서 사용 시
 </script>
 
 <style scoped>

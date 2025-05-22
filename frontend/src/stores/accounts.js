@@ -13,6 +13,7 @@ export const useAccountStore = defineStore('account', () => {
   const isLogin = computed(() => !!token.value) // 간결하게 수정
 
   const signUp = function (payload) { // {username, password, password2, email, age}
+    console.log('Signing up with payload:', payload)
     axios({
       method: 'POST',
       url: `${ACCOUNT_API_URL}/signup/`,

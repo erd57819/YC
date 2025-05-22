@@ -77,8 +77,8 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:5174',
-    'http://localhost:5174',
+    'http://127.0.0.1:5173',
+    'http://localhost:5173',
 ]
 
 
@@ -160,20 +160,17 @@ AUTH_USER_MODEL = 'accounts.User'
 
 REST_AUTH = {
     'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
-    'USER_DETAILS_SERIALIZER': 'accounts.serializers.CustomUserDetailsSerializer', # 프로필 조회/수정용 (추가 예정)
+    'USER_DETAILS_SERIALIZER': 'accounts.serializers.CustomUserDetailsSerializer',
 }
 
-# 이메일 설정 (도전과제용) [cite: 56]
-EMAIL_BACKEND = env('EMAIL_BACKEND')
-EMAIL_HOST = env('EMAIL_HOST')
-EMAIL_PORT = env.int('EMAIL_PORT') # int로 변환
-EMAIL_USE_TLS = env.bool('EMAIL_USE_TLS') # bool로 변환
-EMAIL_HOST_USER = env('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
+# django-allauth 설정 추가 또는 수정
+ACCOUNT_EMAIL_VERIFICATION = 'none'  # 이메일 인증을 사용하지 않음
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
-# API 키 [cite: 118]
+
+
+# API 키 (기존 설정 유지)
 FINLIFE_API_KEY = env('FINLIFE_API_KEY')
 YOUTUBE_API_KEY = env('YOUTUBE_API_KEY')
 KAKAO_API_KEY = env('KAKAO_API_KEY')

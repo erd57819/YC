@@ -9,7 +9,7 @@
         <li class="list-group-item"><strong>이메일:</strong> {{ store.currentUser.email }}</li>
         <li class="list-group-item"><strong>나이:</strong> {{ store.currentUser.age }}</li>
         <li class="list-group-item">
-          <strong>가입 상품 ID:</strong> 
+          <strong>가입 상품 ID:</strong>
           <span v-if="store.currentUser.subscribed_products_display && store.currentUser.subscribed_products_display.length > 0">
             {{ store.currentUser.subscribed_products_display.join(', ') }}
           </span>
@@ -22,6 +22,10 @@
       <div class="card-header">프로필 수정</div>
       <div class="card-body">
         <form @submit.prevent="handleUpdateProfile">
+          <div class="mb-3">
+            <label for="username_display" class="form-label">사용자 이름 (수정 불가)</label>
+            <input type="text" class="form-control" id="username_display" :value="store.currentUser.username" disabled>
+          </div>
           <div class="mb-3">
             <label for="email" class="form-label">이메일</label>
             <input type="email" class="form-control" id="email" v-model="editableProfile.email">
@@ -73,46 +77,59 @@
 
 <script setup>
 import { ref, onMounted, watch } from 'vue'
-import { useAccountStore } from '@/stores/accounts'
+import { useAccountStore } from '@/stores/accounts' //
 
 const store = useAccountStore()
 const editableProfile = ref({
+  // username은 수정 폼에서 직접 관리하지 않고, store.currentUser의 값을 사용합니다.
   email: '',
   age: null,
   first_name: '',
   last_name: '',
-  subscribed_products: '', // 쉼표로 구분된 문자열로 관리
+  subscribed_products: '',
 })
 
-// currentUser가 변경될 때마다 editableProfile을 업데이트
+// store.currentUser가 변경될 때 (예: 최초 로드 또는 업데이트 후) editableProfile 동기화
 watch(() => store.currentUser, (newUser) => {
   if (newUser) {
-    editableProfile.value = {
-      email: newUser.email || '',
-      age: newUser.age || null,
-      first_name: newUser.first_name || '',
-      last_name: newUser.last_name || '',
-      // subscribed_products는 백엔드에서 쉼표 구분 문자열로 오므로 그대로 사용
-      subscribed_products: newUser.subscribed_products || '', 
-    }
+    editableProfile.value.email = newUser.email || '';
+    editableProfile.value.age = newUser.age || null;
+    editableProfile.value.first_name = newUser.first_name || '';
+    editableProfile.value.last_name = newUser.last_name || '';
+    editableProfile.value.subscribed_products = newUser.subscribed_products || '';
   }
-}, { immediate: true }) // 즉시 실행하여 초기 마운트 시에도 적용
+}, { immediate: true, deep: true }) // deep: true는 currentUser 객체 내부 변경 감지 (선택 사항)
 
 const handleUpdateProfile = async () => {
   try {
-    // subscribed_products는 이미 문자열이므로 별도 변환 불필요
-    const payload = { ...editableProfile.value };
+    // 현재 로그인한 사용자의 username을 payload에 포함하여 전송합니다.
+    if (!store.currentUser || !store.currentUser.username) {
+        alert('사용자 정보를 정확히 불러올 수 없습니다. 잠시 후 다시 시도하거나 재로그인 해주세요.');
+        return;
+    }
+
+    const payload = {
+      username: store.currentUser.username, // 현재 사용자의 username을 사용 (변경 불가로 가정)
+      email: editableProfile.value.email,
+      age: editableProfile.value.age,
+      first_name: editableProfile.value.first_name,
+      last_name: editableProfile.value.last_name,
+      subscribed_products: editableProfile.value.subscribed_products,
+    };
     await store.updateUserProfile(payload)
-    // 성공 시 store의 currentUser가 자동으로 업데이트되므로 editableProfile도 watch에 의해 갱신됨
+    // 성공 시 store.updateUserProfile 내부에서 currentUser가 업데이트되고,
+    // watch에 의해 editableProfile도 최신 정보로 동기화될 수 있습니다.
+    // 필요하다면 여기서 추가적인 성공 알림이나 페이지 이동 로직을 넣을 수 있습니다.
   } catch (error) {
-    // 에러 처리는 store에서 이미 alert로 하고 있음
+    // 에러 처리는 store의 updateUserProfile에서 이미 alert로 하고 있음
     console.error("프로필 업데이트 중 컴포넌트 에러:", error)
   }
 }
 
 onMounted(() => {
+  // 페이지 마운트 시 store에 currentUser 정보가 없으면 가져오도록 시도
   if (!store.currentUser && store.token) {
-    store.getUserProfile() // currentUser가 없으면 프로필 정보 다시 요청
+    store.getUserProfile();
   }
 })
 </script>

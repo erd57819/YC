@@ -7,7 +7,8 @@ import CreateView from '@/views/CreateView.vue'
 import SignUpView from '@/views/SignUpView.vue'
 import LogInView from '@/views/LogInView.vue'
 import ProfileView from '@/views/ProfileView.vue' // 프로필 뷰 임포트
-import MainPageView from '@/views/MainPageView.vue' // 메인 페이지 뷰 임포트 (추가)
+import MainPageView from '@/views/MainPageView.vue'
+import BankMapView from '@/views/BankMapView.vue' // 메인 페이지 뷰 임포트 (추가)
 
 import { useAccountStore } from '@/stores/accounts'
 

@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'articles',
     'accounts',
     'products',
+    'maps',
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',

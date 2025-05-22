@@ -1,11 +1,11 @@
-// router/index.js
-
-import { createRouter, createWebHistory } from 'vue-router'
-import ArticleView from '@/views/ArticleView.vue'
-import DetailView from '@/views/DetailView.vue'
-import CreateView from '@/views/CreateView.vue'
-import SignUpView from '@/views/SignUpView.vue'
-import LogInView from '@/views/LogInView.vue'
+// frontend/src/router/index.js
+import { createRouter, createWebHistory } from 'vue-router';
+import ArticleView from '@/views/ArticleView.vue'; //
+import DetailView from '@/views/DetailView.vue'; //
+import CreateView from '@/views/CreateView.vue'; //
+import SignUpView from '@/views/SignUpView.vue'; //
+import LogInView from '@/views/LogInView.vue'; //
+import BankFinder from '@/views/BankFinder.vue'; 
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,7 +35,12 @@ const router = createRouter({
       name: 'LogInView',
       component: LogInView
     },
+    { 
+      path: '/bank-finder',
+      name: 'BankFinder',
+      component: BankFinder
+    }
   ]
-})
+});
 
-export default router
+export default router;

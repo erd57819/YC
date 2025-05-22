@@ -11,6 +11,9 @@
             <li class="nav-item">
               <RouterLink class="nav-link" :to="{ name: 'ArticleView' }">Articles</RouterLink>
             </li>
+            <li class="nav-item">
+              <RouterLink class="nav-link" :to="{ name: 'BankFinder' }">은행찾기</RouterLink>
+            </li>
             <li class="nav-item" v-if="accountStore.isLogin">
               <RouterLink class="nav-link" :to="{ name: 'CreateView' }">Create Article</RouterLink>
             </li>
@@ -38,12 +41,12 @@
 
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import { useAccountStore } from '@/stores/accounts' //
+import { useAccountStore } from '@/stores/accounts'
 
 const accountStore = useAccountStore()
 
 const logOut = () => {
-  accountStore.logOut() //
+  accountStore.logOut()
 }
 </script>
 
@@ -52,10 +55,13 @@ const logOut = () => {
 body {
   background-color: #f8f9fa; /* Optional: Light background for the body */
 }
+/* .container 스타일은 주석 처리하거나 필요에 맞게 조정하세요. */
+/*
 .container {
-  background-color: #ffffff; /* Optional: White background for content area */
+  background-color: #ffffff; 
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Optional: Subtle shadow for the container */
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
+*/
 </style>

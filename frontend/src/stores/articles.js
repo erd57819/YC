@@ -1,4 +1,4 @@
-// frontend/src/stores/articles.js (수정된 최종본)
+// frontend/src/stores/articles.js
 
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
@@ -11,7 +11,8 @@ export const useArticleStore = defineStore('article', () => {
   const API_URL = 'http://127.0.0.1:8000'
   const router = useRouter()
 
-  // 게시글 목록 가져오기
+  // ... (getArticles, getArticleDetail, createArticle, deleteArticle, createComment 함수는 그대로 둡니다) ...
+
   const getArticles = async () => {
     try {
       const response = await axios.get(`${API_URL}/api/v1/articles/`);
@@ -21,10 +22,8 @@ export const useArticleStore = defineStore('article', () => {
     }
   };
 
-  // 단일 게시글 정보 가져오기
   const getArticleDetail = async (articleId) => {
     try {
-      // ★★★ 오타를 수정한 부분 ★★★
       const response = await axios.get(`${API_URL}/api/v1/articles/${articleId}/`);
       return response.data;
     } catch (error) {
@@ -33,7 +32,6 @@ export const useArticleStore = defineStore('article', () => {
     }
   };
 
-  // 게시글 생성하기
   const createArticle = async (payload) => {
     const accountStore = useAccountStore();
     try {
@@ -47,7 +45,6 @@ export const useArticleStore = defineStore('article', () => {
     }
   };
 
-  // 게시글 삭제하기
   const deleteArticle = async (articleId) => {
     const accountStore = useAccountStore();
     if (!accountStore.token) return;
@@ -65,7 +62,6 @@ export const useArticleStore = defineStore('article', () => {
     }
   };
 
-  // 댓글 생성하기
   const createComment = async (articleId, payload) => {
     const accountStore = useAccountStore();
     if (!accountStore.token) return;
@@ -79,6 +75,27 @@ export const useArticleStore = defineStore('article', () => {
     }
   };
 
+  // ▼▼▼▼▼ [추가] 댓글 삭제 함수 ▼▼▼▼▼
+  const deleteComment = async (commentId) => {
+    const accountStore = useAccountStore();
+    if (!accountStore.token) {
+      console.error('로그인이 필요합니다.');
+      return;
+    }
+
+    try {
+      await axios.delete(`${API_URL}/api/v1/articles/comments/${commentId}/`, {
+        headers: { Authorization: `Token ${accountStore.token}` },
+      });
+      // 댓글 삭제 후, 해당 게시글 상세 정보를 다시 불러오거나
+      // 프론트엔드 상태에서 댓글을 제거하는 로직을 추가하면 좋습니다.
+      console.log('댓글 삭제 성공!');
+    } catch (error) {
+      console.error('Error deleting comment:', error);
+    }
+  };
+  // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
   return { 
     articles, 
     API_URL, 
@@ -86,6 +103,7 @@ export const useArticleStore = defineStore('article', () => {
     getArticleDetail, 
     createArticle, 
     deleteArticle, 
-    createComment 
+    createComment,
+    deleteComment //  [추가] 외부에서 사용할 수 있도록 반환
   }
 }, { persist: true })

@@ -3,7 +3,7 @@
     <div class="card mb-4">
       <div class="card-header d-flex justify-content-between align-items-center">
         <h2 class="mb-0">{{ article.title }}</h2>
-        <div v-if="accountStore.user?.username === article.user_nickname">
+        <div v-if="accountStore.user && accountStore.user.nickname === article.user_nickname">
           <button @click="goToEdit" class="btn btn-outline-secondary btn-sm me-2">Edit</button>
           <button @click="deleteArticle" class="btn btn-outline-danger btn-sm">Delete</button>
         </div>
@@ -24,9 +24,18 @@
       <h4 class="mb-3">Comments ({{ article.comment_count }})</h4>
       <div v-if="article.comments && article.comments.length > 0">
         <div class="list-group">
-          <div v-for="comment in article.comments" :key="comment.id" class="list-group-item">
-            <p class="mb-1">{{ comment.content }}</p>
-            <small class="text-muted">by {{ comment.user_nickname }}</small>
+          <div v-for="comment in article.comments" :key="comment.id" class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+              <p class="mb-1">{{ comment.content }}</p>
+              <small class="text-muted">by {{ comment.user_nickname }}</small>
+            </div>
+            <button 
+              v-if="accountStore.user && accountStore.user.nickname === comment.user_nickname"
+              @click="handleDeleteComment(comment.id)" 
+              class="btn btn-outline-danger btn-sm"
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>
@@ -56,7 +65,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'; // ★ 1. onUnmounted를 import 합니다.
+import { ref, onMounted } from 'vue'; // onUnmounted 및 isMounted 관련 로직은 간소화 가능하여 제거
 import { useRoute, useRouter } from 'vue-router';
 import { useArticleStore } from '@/stores/articles';
 import { useAccountStore } from '@/stores/accounts';
@@ -70,45 +79,33 @@ const article = ref(null);
 const newComment = ref('');
 const articleId = route.params.id;
 
-// ★ 2. 컴포넌트가 현재 화면에 존재하는지 상태를 추적하는 변수를 추가합니다.
-let isMounted = false;
-
 // 데이터 로드 함수
 const loadArticle = async () => {
   const fetchedArticle = await articleStore.getArticleDetail(articleId);
-  
-  // ★ 4. API 응답이 왔을 때, 컴포넌트가 여전히 화면에 있는지 확인합니다.
-  if (isMounted && fetchedArticle) {
-    // 화면에 있을 때만 데이터를 업데이트합니다.
-    article.value = fetchedArticle;
-  } else if (isMounted && !fetchedArticle) {
+  article.value = fetchedArticle;
+  if (!fetchedArticle) {
     alert('Failed to load article details.');
     router.push({ name: 'ArticleView' });
   }
 };
 
 onMounted(() => {
-  // ★ 3. 컴포넌트가 화면에 마운트(표시)되면 상태를 true로 변경합니다.
-  isMounted = true;
   if (!accountStore.isLogin) {
     alert('Please log in to view article details.');
     router.push({ name: 'LogInView' });
     return;
   }
+  // 스토어에 사용자 정보가 없을 경우 (예: 페이지 새로고침) 다시 가져옵니다.
+  if (!accountStore.user) {
+    accountStore.fetchUser();
+  }
   loadArticle();
 });
 
-// ★ 5. 컴포넌트가 화면에서 사라지기 직전에 실행됩니다.
-onUnmounted(() => {
-  // 컴포넌트가 사라지면 상태를 false로 변경합니다.
-  isMounted = false; 
-});
-
-
-// --- 아래 함수들은 기존과 동일합니다 ---
-
 // 게시글 수정 페이지로 이동
 const goToEdit = () => {
+  // 수정 기능에 대한 라우터 이름이 'ArticleEditView'라고 가정합니다.
+  // 실제 라우터 설정에 맞게 수정이 필요할 수 있습니다.
   router.push({ name: 'ArticleEditView', params: { id: articleId } });
 };
 
@@ -129,6 +126,14 @@ const submitComment = async () => {
   await articleStore.createComment(articleId, { content: newComment.value });
   newComment.value = ''; // 입력창 초기화
   await loadArticle(); // 댓글 목록 새로고침
+};
+
+// [추가] 댓글 삭제 처리 함수
+const handleDeleteComment = async (commentId) => {
+  if (confirm('Are you sure you want to delete this comment?')) {
+    await articleStore.deleteComment(commentId);
+    await loadArticle(); // 댓글 목록 새로고침
+  }
 };
 </script>
 

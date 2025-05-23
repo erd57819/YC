@@ -12,6 +12,7 @@
     "axios": "^1.6.3",
     "openai": "^4.103.0",
     "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^3.2.3",
     "vue": "^3.3.11",
     "vue-router": "^4.2.5"
   },

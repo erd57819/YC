@@ -1,4 +1,5 @@
 // frontend/src/stores/accounts.js
+
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
@@ -6,63 +7,82 @@ import axios from 'axios'
 
 export const useAccountStore = defineStore('account', () => {
   const ACCOUNT_API_URL = 'http://127.0.0.1:8000/accounts'
-  const token = ref('') // 로그인 성공 시 토큰 저장
+  const token = ref(null)
+  const user = ref(null)
   const router = useRouter()
 
-  // 로그인 여부 확인
-  const isLogin = computed(() => {
-    return token.value ? true : false
-  })
+  const isLogin = computed(() => !!token.value)
 
-  const signUp = function ({username, password1, password2, age}) {
+  const fetchUser = async () => {
+    if (!token.value) return
+    try {
+      const response = await axios({
+        method: 'GET',
+        url: `${ACCOUNT_API_URL}/user/`,
+        headers: { Authorization: `Token ${token.value}` }
+      })
+      user.value = response.data
+    } catch (err) {
+      console.error('사용자 정보 로딩 실패:', err)
+      // 토큰이 유효하지 않을 수 있으므로 로그아웃 처리
+      token.value = null
+      user.value = null
+    }
+  }
+
+  const signUp = function (payload) {
     axios({
       method: 'POST',
       url: `${ACCOUNT_API_URL}/signup/`,
-      data: {
-        username, password1, password2, age
-      }
+      data: payload
     })
-      .then(res => {
+      .then(() => {
         console.log('회원가입 성공!')
         router.push({ name: 'LogInView' })
       })
-      .catch(err => console.log(err))
+      .catch(err => console.error('회원가입 실패:', err.response.data))
   }
 
-  const logIn = function({username, password}) {
+  const logIn = function(payload) {
     axios({
       method: 'POST',
       url: `${ACCOUNT_API_URL}/login/`,
-      data: {
-        username, password
-      }
+      data: payload
     })
-      .then(res => {
-        token.value = res.data.key // 로그인 성공 시 토큰 저장
-        router.push({ name: 'ArticleView' }) // 로그인 성공 시 게시글 목록으로 이동
+      .then(async (res) => {
+        token.value = res.data.key
+        await fetchUser() // 로그인 직후 사용자 정보 가져오기
+        router.push({ name: 'ArticleView' })
       })
-      .catch(err => console.log(err))
+      .catch(err => console.error('로그인 실패:', err.response.data))
   }
 
-  // 로그아웃 기능
   const logOut = function () {
     axios({
       method: 'POST',
       url: `${ACCOUNT_API_URL}/logout/`,
-      headers: {
-        Authorization: `Token ${token.value}` // 현재 로그인 토큰을 헤더에 포함하여 전송
-      }
+      headers: { Authorization: `Token ${token.value}` }
     })
-      .then(res => {
-        token.value = '' // 토큰 초기화 (로그아웃 처리)
+      .then(() => {
         console.log('로그아웃 성공!')
-        router.push({ name: 'ArticleView' }) // 로그아웃 후 게시글 목록으로 이동
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        console.error('로그아웃 실패:', err)
+      })
+      .finally(() => {
+        token.value = null
+        user.value = null
+        router.push({ name: 'ArticleView' })
+      })
   }
 
-  // 외부로 노출할 상태와 함수들을 반환
-  return { 
-    signUp, logIn, token, isLogin, logOut
+  return {
+    signUp,
+    logIn,
+    logOut,
+    token,
+    isLogin,
+    user,
+    fetchUser //<- 이 함수가 외부에 노출되어야 합니다.
   }
 }, { persist: true })

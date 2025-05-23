@@ -10,8 +10,10 @@ class CommentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Comment
-        fields = ('id', 'user_nickname', 'content', 'created_at', 'updated_at', 'article')
-        read_only_fields = ('article', )
+        # 1. 'user' 필드를 fields에 추가합니다.
+        fields = ('id', 'user', 'user_nickname', 'content', 'created_at', 'updated_at', 'article')
+        # 2. 'user' 필드를 read_only_fields에 추가합니다.
+        read_only_fields = ('article', 'user',)
 
 # 게시글 목록에 대한 Serializer
 class ArticleListSerializer(serializers.ModelSerializer):
@@ -25,9 +27,13 @@ class ArticleListSerializer(serializers.ModelSerializer):
 # 게시글 상세 정보에 대한 Serializer
 class ArticleSerializer(serializers.ModelSerializer):
     user_nickname = serializers.CharField(source='user.nickname', read_only=True)
+    # comments 필드는 CommentSerializer를 사용하므로, CommentSerializer 수정이 중요합니다.
     comments = CommentSerializer(many=True, read_only=True)
     comment_count = serializers.IntegerField(source='comments.count', read_only=True)
 
     class Meta:
         model = Article
-        fields = ('id', 'user_nickname', 'title', 'content', 'created_at', 'updated_at', 'comments', 'comment_count')
+        # 3. 'user' 필드를 fields에 추가합니다.
+        fields = ('id', 'user', 'user_nickname', 'title', 'content', 'created_at', 'updated_at', 'comments', 'comment_count')
+        # 4. 'user' 필드를 read_only_fields에 추가합니다.
+        read_only_fields = ('user',)

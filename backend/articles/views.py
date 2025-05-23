@@ -7,25 +7,23 @@ from .serializers import ArticleListSerializer, ArticleSerializer, CommentSerial
 from .models import Article, Comment
 
 @api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticatedOrReadOnly]) # 인증된 사용자는 쓰기 가능, 비인증 사용자는 읽기만 가능
+@permission_classes([IsAuthenticatedOrReadOnly]) 
 def article_list(request):
 
     if request.method == 'GET':
-        articles = Article.objects.all() # 게시글이 없어도 빈 리스트를 반환
+        articles = Article.objects.order_by('-created_at') 
         serializer = ArticleListSerializer(articles, many=True)
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        # 게시글 생성은 인증된 사용자만 가능 (IsAuthenticatedOrReadOnly 덕분에)
         serializer = ArticleSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            # user 필드는 현재 로그인한 사용자로 자동 설정
             serializer.save(user=request.user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes([IsAuthenticatedOrReadOnly]) # 인증된 사용자는 쓰기 가능, 비인증 사용자는 읽기만 가능
+@permission_classes([IsAuthenticatedOrReadOnly]) 
 def article_detail(request, article_pk):
 
     article = get_object_or_404(Article, pk=article_pk)
@@ -34,9 +32,7 @@ def article_detail(request, article_pk):
         serializer = ArticleSerializer(article)
         return Response(serializer.data)
 
-    # 아래부터는 인증된 사용자만 접근 가능
     elif request.method == 'PUT':
-        # 작성자 본인 여부 확인
         if request.user != article.user:
             return Response({'error': 'You are not authorized to edit this article.'}, status=status.HTTP_403_FORBIDDEN)
         
@@ -46,7 +42,6 @@ def article_detail(request, article_pk):
             return Response(serializer.data, status=status.HTTP_200_OK)
 
     elif request.method == 'DELETE':
-        # 작성자 본인 여부 확인
         if request.user != article.user:
             return Response({'error': 'You are not authorized to delete this article.'}, status=status.HTTP_403_FORBIDDEN)
         
@@ -55,19 +50,19 @@ def article_detail(request, article_pk):
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated]) # 댓글 작성은 인증된 사용자만 가능
+@permission_classes([IsAuthenticated]) 
 def comment_create(request, article_pk):
 
     article = get_object_or_404(Article, pk=article_pk)
     serializer = CommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-        # article과 user 필드는 자동으로 채워줌
+
         serializer.save(article=article, user=request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 @api_view(['PUT', 'DELETE'])
-@permission_classes([IsAuthenticated]) # 댓글 수정/삭제는 인증된 사용자만 가능
+@permission_classes([IsAuthenticated]) 
 def comment_detail(request, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
     if request.user != comment.user:

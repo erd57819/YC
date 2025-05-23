@@ -1,5 +1,5 @@
-// frontend/src/router/index.js
 import { createRouter, createWebHistory } from 'vue-router';
+import MainView from '@/views/MainView.vue'; //
 import ArticleView from '@/views/ArticleView.vue'; //
 import DetailView from '@/views/DetailView.vue'; //
 import CreateView from '@/views/CreateView.vue'; //
@@ -11,6 +11,11 @@ import VideoDetailView from '@/views/VideoDetailView.vue'; // Import the VideoDe
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/',
+      name: 'MainView',
+      component: MainView
+    },
     {
       path: '/articles',
       name: 'ArticleView',

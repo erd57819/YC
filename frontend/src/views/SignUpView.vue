@@ -75,12 +75,9 @@ import { ref, onMounted } from 'vue'
 import { useAccountStore } from '@/stores/accounts'
 import { RouterLink } from 'vue-router'
 
-// 필수 정보
 const username = ref('')
 const password = ref('')
 const confirmPassword = ref('')
-
-// 선택 정보
 const nickname = ref('')
 const age = ref(null)
 const salary = ref(null)
@@ -89,7 +86,6 @@ const wealth = ref(null)
 const accountStore = useAccountStore()
 
 onMounted(() => {
-  // Bootstrap 폼 유효성 검사 스크립트 초기화
   const forms = document.querySelectorAll('.needs-validation')
   Array.from(forms).forEach(form => {
     form.addEventListener('submit', event => {
@@ -103,24 +99,21 @@ onMounted(() => {
 })
 
 const submitSignUp = () => {
-  // 비밀번호 일치 여부 확인
   if (password.value !== confirmPassword.value) {
     const form = document.querySelector('.needs-validation');
     if (form) form.classList.add('was-validated');
     return
   }
   
-  // Bootstrap의 기본 유효성 검사
   const form = document.querySelector('.needs-validation');
   if (form && !form.checkValidity()) {
     form.classList.add('was-validated');
     return;
   }
 
-  // 백엔드로 보낼 데이터 (dj-rest-auth 형식에 맞춤)
   const payload = {
     username: username.value,
-    password1: password.value, // dj-rest-auth RegisterSerializer는 password와 password2를 사용합니다.
+    password1: password.value, 
     password2: confirmPassword.value,
     nickname: nickname.value,
     age: age.value,
@@ -128,14 +121,12 @@ const submitSignUp = () => {
     wealth: wealth.value,
   }
 
-  // 비어있는 선택 필드는 전송하지 않도록 처리
   Object.keys(payload).forEach(key => {
     if (payload[key] === null || payload[key] === '') {
       delete payload[key];
     }
   });
 
-  // accounts store의 signUp 액션 호출
   accountStore.signUp(payload)
 }
 </script>

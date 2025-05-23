@@ -82,7 +82,6 @@ const article = ref(null)
 const newComment = ref('')
 const articleId = route.params.id
 
-// 데이터 새로고침 함수
 const refreshArticle = async () => {
   article.value = await articleStore.getArticleDetail(articleId)
 }
@@ -96,7 +95,6 @@ const isAuthor = computed(() => {
   return accountStore.user.id === article.value.user
 })
 
-// 날짜 포맷 함수 (용도에 따라 'date' 또는 'datetime'으로 포맷)
 const formatDate = (dateString, type) => {
   if (!dateString) return ''
   const date = new Date(dateString)
@@ -124,22 +122,20 @@ const deletePost = async () => {
   }
 }
 
-// 댓글 작성 로직
 const submitComment = async () => {
   if (!newComment.value) {
     alert('댓글 내용을 입력해주세요.')
     return
   }
   await articleStore.createComment(articleId, { content: newComment.value })
-  newComment.value = '' // 입력창 초기화
-  await refreshArticle() // 댓글 목록 새로고침
+  newComment.value = '' 
+  await refreshArticle()
 }
 
-// 댓글 삭제 로직
 const removeComment = async (commentId) => {
   if (confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
     await articleStore.deleteComment(commentId)
-    await refreshArticle() // 댓글 목록 새로고침
+    await refreshArticle() 
   }
 }
 </script>
@@ -157,7 +153,7 @@ const removeComment = async (commentId) => {
 .article-content p { font-size: 17px; line-height: 1.8; color: #343a40; white-space: pre-wrap; word-break: break-word; }
 .article-actions { margin-top: 20px; display: flex; justify-content: flex-end; gap: 10px; }
 
-/* ▼▼▼▼▼ 댓글 섹션 스타일 (추가) ▼▼▼▼▼ */
+
 .comments-section {
   margin-top: 30px;
 }
@@ -172,7 +168,7 @@ const removeComment = async (commentId) => {
 .comment-list {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* 댓글 아이템 사이의 간격 */
+  gap: 15px; 
 }
 
 .comment-item {
@@ -231,7 +227,6 @@ const removeComment = async (commentId) => {
   padding: 30px 0;
 }
 
-/* 댓글 작성 폼 */
 .comment-form {
   margin-top: 30px;
   display: flex;
@@ -245,7 +240,7 @@ const removeComment = async (commentId) => {
 }
 
 .btn-submit-comment {
-  align-self: flex-end; /* 버튼을 오른쪽으로 정렬 */
+  align-self: flex-end; 
   padding: 8px 20px;
 }
 </style>

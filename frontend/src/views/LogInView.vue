@@ -44,7 +44,6 @@ const password = ref('')
 const accountStore = useAccountStore()
 
 onMounted(() => {
-  // Bootstrap 폼 유효성 검사 스크립트 초기화
   const forms = document.querySelectorAll('.needs-validation')
   Array.from(forms).forEach(form => {
     form.addEventListener('submit', event => {
@@ -58,7 +57,6 @@ onMounted(() => {
 })
 
 const submitLogIn = () => {
-  // 폼 유효성 검사
   const form = document.querySelector('.needs-validation');
   if (form && !form.checkValidity()) {
     form.classList.add('was-validated');

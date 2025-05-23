@@ -1,5 +1,3 @@
-// frontend/src/stores/accounts.js
-
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
@@ -83,6 +81,6 @@ export const useAccountStore = defineStore('account', () => {
     token,
     isLogin,
     user,
-    fetchUser //<- 이 함수가 외부에 노출되어야 합니다.
+    fetchUser 
   }
 }, { persist: true })

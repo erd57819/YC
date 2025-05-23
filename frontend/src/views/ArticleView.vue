@@ -45,12 +45,12 @@
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useArticleStore } from '@/stores/articles'
-// ▼▼▼▼▼ [추가] 로그인 상태를 확인하기 위해 account 스토어를 가져옵니다. ▼▼▼▼▼
+
 import { useAccountStore } from '@/stores/accounts'
 
 const store = useArticleStore()
 const router = useRouter()
-// ▼▼▼▼▼ [추가] account 스토어 인스턴스 생성 ▼▼▼▼▼
+
 const accountStore = useAccountStore()
 
 onMounted(() => {
@@ -61,7 +61,6 @@ const goToDetail = (articleId) => {
   router.push({ name: 'DetailView', params: { id: articleId } })
 }
 
-// ▼▼▼▼▼ [추가] 글쓰기 페이지로 이동하는 함수 ▼▼▼▼▼
 const goToCreate = () => {
   router.push({ name: 'CreateView' })
 }
@@ -88,7 +87,6 @@ const formatDate = (dateString) => {
 .board-wrapper { background-color: #f4f6f9; padding: 40px 20px; display: flex; justify-content: center; min-height: calc(100vh - 56px); font-family: 'Pretendard', sans-serif; }
 .board-container { background-color: white; padding: 30px 40px; border-radius: 12px; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.07); width: 100%; max-width: 1100px; }
 
-/* ▼▼▼▼▼ [추가] 제목과 버튼을 정렬하기 위한 스타일 ▼▼▼▼▼ */
 .board-title-header {
   display: flex;
   justify-content: space-between;
@@ -99,9 +97,8 @@ const formatDate = (dateString) => {
 h2 {
   font-weight: 700;
   font-size: 28px;
-  margin-bottom: 0; /* board-title-header 에서 margin을 관리하므로 0으로 변경 */
+  margin-bottom: 0; 
 }
-/* ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲ */
 
 .date-filter-box { border: 1px solid #dee2e6; padding: 8px 12px; border-radius: 6px; display: inline-block; margin-bottom: 30px; font-size: 14px; color: #495057; }
 .dropdown-arrow { margin-left: 10px; color: #868e96; }

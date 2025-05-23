@@ -18,7 +18,6 @@ const onSearch = async () => {
 </script>
 
 <template>
-<!-- ── 검색 박스 ──────────────────────────────── -->
 <form class="search-box d-flex align-items-center gap-2 mb-4" @submit.prevent="onSearch">
   <i class="bi bi-search search-icon"></i>
   <input
@@ -29,13 +28,11 @@ const onSearch = async () => {
   <button type="submit" class="btn btn-primary">검색</button>
 </form>
 
-  <!-- ── 결과 카드 그리드 ───────────────────────── -->
   <div class="container">
     <div v-if="loading" class="text-center py-5">로딩 중…</div>
 
     <div v-else class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
       <div v-for="v in videos" :key="v.id.videoId" class="col">
-        <!-- VideoCard 내부에 버튼 슬롯 그대로 사용 -->
         <VideoCard :video="v" class="h-100" />
       </div>
     </div>

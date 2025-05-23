@@ -1,5 +1,3 @@
-<!-- components/ArticleListItem.vue -->
-
 <template>
   <div>
     <h5>{{ article.id }}</h5>

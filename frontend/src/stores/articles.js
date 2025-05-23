@@ -1,5 +1,3 @@
-// frontend/src/stores/articles.js
-
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
@@ -10,8 +8,6 @@ export const useArticleStore = defineStore('article', () => {
   const articles = ref([])
   const API_URL = 'http://127.0.0.1:8000'
   const router = useRouter()
-
-  // ... (getArticles, getArticleDetail, createArticle, deleteArticle, createComment 함수는 그대로 둡니다) ...
 
   const getArticles = async () => {
     try {
@@ -75,7 +71,6 @@ export const useArticleStore = defineStore('article', () => {
     }
   };
 
-  // ▼▼▼▼▼ [추가] 댓글 삭제 함수 ▼▼▼▼▼
   const deleteComment = async (commentId) => {
     const accountStore = useAccountStore();
     if (!accountStore.token) {
@@ -87,8 +82,6 @@ export const useArticleStore = defineStore('article', () => {
       await axios.delete(`${API_URL}/api/v1/articles/comments/${commentId}/`, {
         headers: { Authorization: `Token ${accountStore.token}` },
       });
-      // 댓글 삭제 후, 해당 게시글 상세 정보를 다시 불러오거나
-      // 프론트엔드 상태에서 댓글을 제거하는 로직을 추가하면 좋습니다.
       console.log('댓글 삭제 성공!');
     } catch (error) {
       console.error('Error deleting comment:', error);
@@ -98,26 +91,22 @@ export const useArticleStore = defineStore('article', () => {
     const accountStore = useAccountStore();
     if (!accountStore.token) {
       console.error('로그인이 필요합니다.');
-      // 필요시 로그인 페이지로 리다이렉트
-      // router.push({ name: 'LogInView' }); 
-      return null; // 또는 에러 throw
+      return null; 
     }
 
     try {
       const response = await axios.put(
-        `${API_URL}/api/v1/articles/${articleId}/`, // 백엔드 수정 API 엔드포인트
+        `${API_URL}/api/v1/articles/${articleId}/`, 
         payload,
         {
           headers: { Authorization: `Token ${accountStore.token}` },
         }
       );
-      // 수정 성공 후, 상태 업데이트 (예: articles 목록에서 해당 게시글 업데이트 또는 상세 정보 다시 로드)
-      // 여기서는 DetailView로 이동하여 다시 로드하도록 함
+
       router.push({ name: 'DetailView', params: { id: articleId } }); 
       return response.data;
     } catch (error) {
       console.error('Error updating article:', error.response?.data || error.message);
-      // 사용자에게 에러 알림
       alert(`게시글 수정에 실패했습니다: ${error.response?.data?.detail || error.message}`);
       return null;
     }

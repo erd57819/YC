@@ -46,7 +46,6 @@ onMounted(async () => {
 
   const fetchedArticle = await articleStore.getArticleDetail(articleId);
   if (fetchedArticle) {
-    // 작성자 본인 확인 (중요!)
     if (accountStore.user && accountStore.user.nickname !== fetchedArticle.user_nickname) {
         alert('You are not authorized to edit this article.');
         console.log(articleId);
@@ -69,9 +68,6 @@ const submitUpdate = async () => {
   }
   const updatedArticle = await articleStore.updateArticle(articleId, formData.value);
   if (updatedArticle) {
-    // updateArticle 액션 내부에서 DetailView로 이동하므로 별도 처리 불필요할 수 있음
-    // 혹은 여기서 성공 알림 후 DetailView로 이동
-    // router.push({ name: 'DetailView', params: { id: articleId } });
   }
 };
 

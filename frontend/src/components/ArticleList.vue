@@ -1,5 +1,3 @@
-<!-- components/ArticleList.vue -->
-
 <template>
   <div>
     <h3>Article List</h3>

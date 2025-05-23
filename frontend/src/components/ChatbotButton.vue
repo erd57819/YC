@@ -47,8 +47,7 @@
 <script setup>
 import { ref, nextTick } from 'vue';
 import OpenAI from 'openai';
-// 1. 캐릭터 이미지 import (src/assets 폴더에 이미지가 있다고 가정)
-import characterIcon from '@/assets/cutebono.png'; // 파일명을 실제 이미지 파일명으로 변경하세요.
+import characterIcon from '@/assets/cutebono.png'; 
 
 const OPENAI_API_KEY = import.meta.env.VITE_OPEN_AI_API_KEY;
 const openai = OPENAI_API_KEY ? new OpenAI({ apiKey: OPENAI_API_KEY, dangerouslyAllowBrowser: true }) : null;
@@ -130,34 +129,29 @@ const sendMessage = async () => {
   z-index: 1000;
 }
 
-/* 챗봇 토글 버튼 스타일 수정 */
 .chatbot-toggle-button {
-  background-color: transparent; /* 배경색 투명으로 변경 */
-  border: none;                 /* 테두리 제거 */
-  border-radius: 50%;           /* 아이콘이 원형이 아니라면 이 부분도 조절 가능 */
-  width: 60px;                  /* 아이콘 크기에 맞춰 조절 (아래 아이콘 크기와 동일하게) */
-  height: 60px;                 /* 아이콘 크기에 맞춰 조절 (아래 아이콘 크기와 동일하게) */
+  background-color: transparent; 
+  border: none;                 
+  border-radius: 50%;           
+  width: 60px;                 
+  height: 60px;                 
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  padding: 0;                   /* 패딩 제거 */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 기존 그림자 유지 */
-  /* transition 은 box-shadow 등에 적용될 수 있으나, 배경색 변경이 없으므로 수정 또는 제거 가능 */
-  transition: transform 0.2s ease; /* 클릭/호버 시 약간의 인터랙션 효과 */
+  padding: 0;                
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  transition: transform 0.2s ease; 
 }
 
 .chatbot-toggle-button:hover {
-  /* background-color: #0056b3; 배경색 변경 효과 제거 */
-  transform: scale(1.1); /* 호버 시 약간 확대되는 효과 (선택 사항) */
+  transform: scale(1.1); 
 }
 
-/* 챗봇 토글 버튼 내부 아이콘 이미지 스타일 수정 */
 .chatbot-button-icon {
-  width: 50px;  /* 버튼 크기에 맞게 원하는 크기로 설정 (예: 50px) */
-  height: 50px; /* 버튼 크기에 맞게 원하는 크기로 설정 (예: 50px) */
+  width: 50px;  
+  height: 50px; 
   object-fit: cover;
-  /* border-radius: 50%; 이미지가 원형일 경우, 캐릭터 모양에 따라 조정 */
 }
 
 .chat-window {
@@ -242,12 +236,11 @@ const sendMessage = async () => {
   border-bottom-left-radius: 5px;
 }
 
-/* 봇 아바타 이미지 스타일 수정 */
 .bot-avatar {
-  width: 50px;   /* 기존 30px 에서 크기 증가 (예: 40px) */
-  height: 50px;  /* 기존 30px 에서 크기 증가 (예: 40px) */
+  width: 50px;   
+  height: 50px;  
   border-radius: 50%;
-  margin-right: 10px; /* 텍스트와의 간격, 필요시 조정 */
+  margin-right: 10px; 
   flex-shrink: 0;
   object-fit: cover;
 }

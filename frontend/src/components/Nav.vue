@@ -26,7 +26,7 @@
           </li>
           <li class="nav-item" v-if="accountStore.isLogin">
             <a class="nav-link welcome-message" href="#">
-              <strong>{{ accountStore.user?.username }}</strong>님 환영합니다!
+              <strong>{{ accountStore.user?.nickname }}</strong>님 환영합니다!
             </a>
           </li>
           <li class="nav-item" v-if="accountStore.isLogin">

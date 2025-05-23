@@ -6,7 +6,6 @@ from dj_rest_auth.registration.serializers import RegisterSerializer
 User = get_user_model()
 
 class CustomRegisterSerializer(RegisterSerializer):
-    # ... (기존 코드와 동일)
     nickname = serializers.CharField(max_length=20, required=False)
     age = serializers.IntegerField(required=False)
     salary = serializers.IntegerField(required=False)

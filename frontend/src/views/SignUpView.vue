@@ -13,6 +13,7 @@
                   Please choose a username.
                 </div>
               </div>
+              
               <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" v-model.trim="password" required minlength="8">
@@ -20,6 +21,7 @@
                   Password must be at least 8 characters.
                 </div>
               </div>
+
               <div class="mb-3">
                 <label for="confirmPassword" class="form-label">Confirm Password</label>
                 <input type="password" class="form-control" id="confirmPassword" v-model.trim="confirmPassword" required>
@@ -30,14 +32,31 @@
                   Please confirm your password.
                 </div>
               </div>
+
+              <hr class="my-4">
+              <p class="text-muted text-center">Optional Information</p>
+
+              <div class="mb-3">
+                <label for="nickname" class="form-label">Nickname</label>
+                <input type="text" class="form-control" id="nickname" v-model.trim="nickname">
+              </div>
+
               <div class="mb-3">
                 <label for="age" class="form-label">Age</label>
-                <input type="number" class="form-control" id="age" v-model.number="age" required min="1">
-                 <div class="invalid-feedback">
-                  Please enter a valid age.
-                </div>
+                <input type="number" class="form-control" id="age" v-model.number="age" min="1">
               </div>
-              <div class="d-grid">
+
+              <div class="mb-3">
+                <label for="salary" class="form-label">Annual Salary (in KRW)</label>
+                <input type="number" class="form-control" id="salary" v-model.number="salary" min="0">
+              </div>
+
+              <div class="mb-3">
+                <label for="wealth" class="form-label">Total Wealth (in KRW)</label>
+                <input type="number" class="form-control" id="wealth" v-model.number="wealth" min="0">
+              </div>
+
+              <div class="d-grid mt-4">
                 <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
               </div>
             </form>
@@ -56,10 +75,17 @@ import { ref, onMounted } from 'vue'
 import { useAccountStore } from '@/stores/accounts'
 import { RouterLink } from 'vue-router'
 
+// 필수 정보
 const username = ref('')
 const password = ref('')
 const confirmPassword = ref('')
+
+// 선택 정보
+const nickname = ref('')
 const age = ref(null)
+const salary = ref(null)
+const wealth = ref(null)
+
 const accountStore = useAccountStore()
 
 onMounted(() => {
@@ -77,27 +103,40 @@ onMounted(() => {
 })
 
 const submitSignUp = () => {
-  // 추가적인 유효성 검사 (비밀번호 일치 등)
+  // 비밀번호 일치 여부 확인
   if (password.value !== confirmPassword.value) {
-    // alert("Passwords do not match.") // Bootstrap 유효성 피드백으로 대체
-    // 수동으로 was-validated 클래스 추가하여 Bootstrap 유효성 검사 트리거
     const form = document.querySelector('.needs-validation');
     if (form) form.classList.add('was-validated');
     return
   }
-  // 폼 유효성 검사
+  
+  // Bootstrap의 기본 유효성 검사
   const form = document.querySelector('.needs-validation');
   if (form && !form.checkValidity()) {
     form.classList.add('was-validated');
     return;
   }
 
-  accountStore.signUp({ //
+  // 백엔드로 보낼 데이터 (dj-rest-auth 형식에 맞춤)
+  const payload = {
     username: username.value,
-    password1: password.value,
+    password1: password.value, // dj-rest-auth RegisterSerializer는 password와 password2를 사용합니다.
     password2: confirmPassword.value,
-    age: age.value
-  })
+    nickname: nickname.value,
+    age: age.value,
+    salary: salary.value,
+    wealth: wealth.value,
+  }
+
+  // 비어있는 선택 필드는 전송하지 않도록 처리
+  Object.keys(payload).forEach(key => {
+    if (payload[key] === null || payload[key] === '') {
+      delete payload[key];
+    }
+  });
+
+  // accounts store의 signUp 액션 호출
+  accountStore.signUp(payload)
 }
 </script>
 
@@ -105,6 +144,7 @@ const submitSignUp = () => {
 .signup-view {
   padding-top: 40px;
   padding-bottom: 40px;
+  background-color: #f8f9fa;
 }
 .card {
   border: none;

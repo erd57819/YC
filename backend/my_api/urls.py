@@ -26,5 +26,4 @@ urlpatterns = [
     path('accounts/signup/', include('dj_rest_auth.registration.urls')),
     path('financials/', include('financials.urls')), 
     path('golds/', include('golds.urls')), 
-    path('procudts/', include('products.urls')), 
 ]

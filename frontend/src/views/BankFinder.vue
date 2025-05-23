@@ -189,8 +189,7 @@ const searchBankBranches = () => {
   }
 
   const keyword = `${selectedDistrict.value} ${selectedBank.value}`
-  console.log(`검색 키워드: ${keyword}`)
-  
+
   const placesInstance = new window.kakao.maps.services.Places();
   placesInstance.keywordSearch(keyword, placesSearchCB)
 

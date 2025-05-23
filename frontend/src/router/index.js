@@ -7,7 +7,8 @@ import SignUpView from '@/views/SignUpView.vue'; //
 import LogInView from '@/views/LogInView.vue'; //
 import BankFinder from '@/views/BankFinder.vue'; 
 import SearchView from '@/views/SearchView.vue'; //
-import VideoDetailView from '@/views/VideoDetailView.vue'; // Import the VideoDetailView component
+import VideoDetailView from '@/views/VideoDetailView.vue';
+import ArticleEditView from '@/views/ArticleEditView.vue'; // Import the VideoDetailView component
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -20,6 +21,11 @@ const router = createRouter({
       path: '/articles',
       name: 'ArticleView',
       component: ArticleView
+    },
+    {
+      path: '/articles/edit',
+      name: 'ArticleEditView',
+      component: ArticleEditView
     },
     {
       path: '/articles/:id',

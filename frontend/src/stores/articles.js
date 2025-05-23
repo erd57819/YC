@@ -94,7 +94,35 @@ export const useArticleStore = defineStore('article', () => {
       console.error('Error deleting comment:', error);
     }
   };
-  // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+    const updateArticle = async (articleId, payload) => {
+    const accountStore = useAccountStore();
+    if (!accountStore.token) {
+      console.error('로그인이 필요합니다.');
+      // 필요시 로그인 페이지로 리다이렉트
+      // router.push({ name: 'LogInView' }); 
+      return null; // 또는 에러 throw
+    }
+
+    try {
+      const response = await axios.put(
+        `${API_URL}/api/v1/articles/${articleId}/`, // 백엔드 수정 API 엔드포인트
+        payload,
+        {
+          headers: { Authorization: `Token ${accountStore.token}` },
+        }
+      );
+      // 수정 성공 후, 상태 업데이트 (예: articles 목록에서 해당 게시글 업데이트 또는 상세 정보 다시 로드)
+      // 여기서는 DetailView로 이동하여 다시 로드하도록 함
+      router.push({ name: 'DetailView', params: { id: articleId } }); 
+      return response.data;
+    } catch (error) {
+      console.error('Error updating article:', error.response?.data || error.message);
+      // 사용자에게 에러 알림
+      alert(`게시글 수정에 실패했습니다: ${error.response?.data?.detail || error.message}`);
+      return null;
+    }
+  };
+
 
   return { 
     articles, 
@@ -104,6 +132,7 @@ export const useArticleStore = defineStore('article', () => {
     createArticle, 
     deleteArticle, 
     createComment,
-    deleteComment //  [추가] 외부에서 사용할 수 있도록 반환
+    deleteComment,
+    updateArticle 
   }
 }, { persist: true })

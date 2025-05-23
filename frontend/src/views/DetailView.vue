@@ -5,7 +5,7 @@
         <h2 class="mb-0">{{ article.title }}</h2>
         <div v-if="accountStore.user && accountStore.user.nickname === article.user_nickname">
           <button @click="goToEdit" class="btn btn-outline-secondary btn-sm me-2">Edit</button>
-          <button @click="deleteArticle" class="btn btn-outline-danger btn-sm">Delete</button>
+          <button @click="handleDeleteArticle" class="btn btn-outline-danger btn-sm">Delete</button>
         </div>
       </div>
       <div class="card-body">
@@ -46,10 +46,10 @@
 
     <div class="comment-form mt-4 card">
       <div class="card-body">
-        <form @submit.prevent="submitComment">
+        <form @submit.prevent="handleSubmitComment">
           <div class="mb-3">
             <label for="commentContent" class="form-label">Leave a Comment</label>
-            <textarea class="form-control" id="commentContent" v-model="newComment" rows="3" required></textarea>
+            <textarea class="form-control" id="commentContent" v-model="newCommentContent" rows="3" required></textarea>
           </div>
           <button type="submit" class="btn btn-primary">Submit Comment</button>
         </form>
@@ -65,7 +65,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'; // onUnmounted 및 isMounted 관련 로직은 간소화 가능하여 제거
+import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useArticleStore } from '@/stores/articles';
 import { useAccountStore } from '@/stores/accounts';
@@ -76,63 +76,68 @@ const articleStore = useArticleStore();
 const accountStore = useAccountStore();
 
 const article = ref(null);
-const newComment = ref('');
+const newCommentContent = ref(''); // 변수명 변경: newComment -> newCommentContent (가독성)
 const articleId = route.params.id;
 
-// 데이터 로드 함수
-const loadArticle = async () => {
+// 데이터 로드 함수 (게시글)
+const loadArticleDetail = async () => {
   const fetchedArticle = await articleStore.getArticleDetail(articleId);
-  article.value = fetchedArticle;
-  if (!fetchedArticle) {
+  if (fetchedArticle) {
+    article.value = fetchedArticle;
+  } else {
     alert('Failed to load article details.');
     router.push({ name: 'ArticleView' });
   }
 };
 
-onMounted(() => {
+// 컴포넌트 마운트 시 실행될 초기화 로직
+onMounted(async () => {
   if (!accountStore.isLogin) {
     alert('Please log in to view article details.');
     router.push({ name: 'LogInView' });
     return;
   }
+
   // 스토어에 사용자 정보가 없을 경우 (예: 페이지 새로고침) 다시 가져옵니다.
+  // fetchUser는 비동기이므로 await를 사용하여 완료를 기다립니다.
   if (!accountStore.user) {
-    accountStore.fetchUser();
+    await accountStore.fetchUser();
   }
-  loadArticle();
+  
+  // 게시글 상세 정보 로드
+  await loadArticleDetail();
 });
 
-// 게시글 수정 페이지로 이동
+// 게시글 수정 페이지로 이동 함수
 const goToEdit = () => {
-  // 수정 기능에 대한 라우터 이름이 'ArticleEditView'라고 가정합니다.
-  // 실제 라우터 설정에 맞게 수정이 필요할 수 있습니다.
+  // 'ArticleEditView'는 실제 라우터에 정의된 이름이어야 합니다.
   router.push({ name: 'ArticleEditView', params: { id: articleId } });
 };
 
-// 게시글 삭제 함수
-const deleteArticle = async () => {
+// 게시글 삭제 처리 함수 (함수명 일관성: deleteArticle -> handleDeleteArticle)
+const handleDeleteArticle = async () => {
   if (confirm('Are you sure you want to delete this article?')) {
     await articleStore.deleteArticle(articleId);
     router.push({ name: 'ArticleView' });
   }
 };
 
-// 댓글 작성 함수
-const submitComment = async () => {
-  if (!newComment.value.trim()) {
+// 댓글 작성 처리 함수 (함수명 일관성: submitComment -> handleSubmitComment)
+const handleSubmitComment = async () => {
+  if (!newCommentContent.value.trim()) {
     alert('Comment content cannot be empty.');
     return;
   }
-  await articleStore.createComment(articleId, { content: newComment.value });
-  newComment.value = ''; // 입력창 초기화
-  await loadArticle(); // 댓글 목록 새로고침
+  await articleStore.createComment(articleId, { content: newCommentContent.value });
+  newCommentContent.value = ''; // 입력창 초기화
+  await loadArticleDetail(); // 댓글 목록 포함, 게시글 전체 정보 새로고침
 };
 
-// [추가] 댓글 삭제 처리 함수
+// 댓글 삭제 처리 함수
 const handleDeleteComment = async (commentId) => {
   if (confirm('Are you sure you want to delete this comment?')) {
     await articleStore.deleteComment(commentId);
-    await loadArticle(); // 댓글 목록 새로고침
+    await loadArticleDetail(); // 댓글 목록 포함, 게시글 전체 정보 새로고침
   }
 };
 </script>
@@ -143,7 +148,7 @@ const handleDeleteComment = async (commentId) => {
   margin: auto;
 }
 .article-content {
-  white-space: pre-wrap;
+  white-space: pre-wrap; /* 줄바꿈 및 공백 유지 */
   line-height: 1.6;
 }
 .comments-section {

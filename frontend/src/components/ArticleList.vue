@@ -14,6 +14,5 @@
 <script setup>
 import { useArticleStore } from '@/stores/articles'
 import ArticleListItem from '@/components/ArticleListItem.vue'
-# dddddddd
 const store = useArticleStore()
 </script>

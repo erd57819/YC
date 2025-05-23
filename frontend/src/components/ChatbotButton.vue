@@ -1,7 +1,7 @@
 <template>
   <div class="chatbot-container">
     <button v-if="!isChatOpen" @click="toggleChat" class="chatbot-toggle-button">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+      <img :src="characterIcon" alt="챗봇 열기" class="chatbot-button-icon"/>
     </button>
 
     <div v-if="isChatOpen" class="chat-window">
@@ -12,11 +12,22 @@
         </button>
       </div>
       <div class="chat-body" ref="chatBody">
-        <div v-for="(message, index) in messages" :key="index" :class="['message-bubble', message.sender]">
-          <p>{{ message.text }}</p>
+        <div v-for="(message, index) in messages" :key="index" :class="['message-wrapper', message.sender === 'bot' ? 'bot-wrapper' : 'user-wrapper']">
+          <div :class="['message-bubble', message.sender]">
+            <div v-if="message.sender === 'bot'" class="bot-message-content">
+              <img :src="characterIcon" alt="봇 아바타" class="bot-avatar"/>
+              <p>{{ message.text }}</p>
+            </div>
+            <p v-else>{{ message.text }}</p>
+          </div>
         </div>
-        <div v-if="isLoading" class="message-bubble bot">
-          <p>답변을 생성 중입니다...</p>
+        <div v-if="isLoading" class="message-wrapper bot-wrapper">
+          <div class="message-bubble bot">
+            <div class="bot-message-content">
+              <img :src="characterIcon" alt="봇 아바타" class="bot-avatar"/>
+              <p>답변을 생성 중입니다...</p>
+            </div>
+          </div>
         </div>
       </div>
       <div class="chat-footer">
@@ -36,6 +47,8 @@
 <script setup>
 import { ref, nextTick } from 'vue';
 import OpenAI from 'openai';
+// 1. 캐릭터 이미지 import (src/assets 폴더에 이미지가 있다고 가정)
+import characterIcon from '@/assets/cutebono.png'; // 파일명을 실제 이미지 파일명으로 변경하세요.
 
 const OPENAI_API_KEY = import.meta.env.VITE_OPEN_AI_API_KEY;
 const openai = OPENAI_API_KEY ? new OpenAI({ apiKey: OPENAI_API_KEY, dangerouslyAllowBrowser: true }) : null;
@@ -44,13 +57,15 @@ const isChatOpen = ref(false);
 const userInput = ref('');
 const messages = ref([]);
 const isLoading = ref(false);
-const chatBody = ref(null); // 채팅창 스크롤을 위한 ref
+const chatBody = ref(null);
 
 const toggleChat = () => {
   isChatOpen.value = !isChatOpen.value;
   if (isChatOpen.value && messages.value.length === 0) {
-    // 채팅창이 열릴 때 초기 메시지 (선택 사항)
     messages.value.push({ sender: 'bot', text: '안녕하세요! 무엇을 도와드릴까요?' });
+  }
+  if(isChatOpen.value) {
+    scrollToBottom();
   }
 };
 
@@ -81,14 +96,14 @@ const sendMessage = async () => {
   try {
     const completion = await openai.chat.completions.create({
       messages: [
-        { role: 'system', content: 'You are a helpful assistant.' }, // 챗봇의 역할 설정 (필요에 따라 수정)
-        ...messages.value.filter(msg => msg.sender === 'user' || msg.sender === 'bot').map(msg => ({ // 이전 대화 내용 포함 (선택적)
+        { role: 'system', content: 'You are a helpful assistant.' },
+        ...messages.value.filter(msg => msg.sender === 'user' || msg.sender === 'bot').map(msg => ({
           role: msg.sender === 'user' ? 'user' : 'assistant',
           content: msg.text
         })),
         { role: 'user', content: userMessage }
       ],
-      model: 'gpt-3.5-turbo', // 사용하려는 모델 선택
+      model: 'gpt-3.5-turbo',
     });
 
     const botResponse = completion.choices[0]?.message?.content?.trim();
@@ -115,23 +130,34 @@ const sendMessage = async () => {
   z-index: 1000;
 }
 
+/* 챗봇 토글 버튼 스타일 수정 */
 .chatbot-toggle-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  background-color: transparent; /* 배경색 투명으로 변경 */
+  border: none;                 /* 테두리 제거 */
+  border-radius: 50%;           /* 아이콘이 원형이 아니라면 이 부분도 조절 가능 */
+  width: 60px;                  /* 아이콘 크기에 맞춰 조절 (아래 아이콘 크기와 동일하게) */
+  height: 60px;                 /* 아이콘 크기에 맞춰 조절 (아래 아이콘 크기와 동일하게) */
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: background-color 0.3s ease;
+  padding: 0;                   /* 패딩 제거 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 기존 그림자 유지 */
+  /* transition 은 box-shadow 등에 적용될 수 있으나, 배경색 변경이 없으므로 수정 또는 제거 가능 */
+  transition: transform 0.2s ease; /* 클릭/호버 시 약간의 인터랙션 효과 */
 }
 
 .chatbot-toggle-button:hover {
-  background-color: #0056b3;
+  /* background-color: #0056b3; 배경색 변경 효과 제거 */
+  transform: scale(1.1); /* 호버 시 약간 확대되는 효과 (선택 사항) */
+}
+
+/* 챗봇 토글 버튼 내부 아이콘 이미지 스타일 수정 */
+.chatbot-button-icon {
+  width: 50px;  /* 버튼 크기에 맞게 원하는 크기로 설정 (예: 50px) */
+  height: 50px; /* 버튼 크기에 맞게 원하는 크기로 설정 (예: 50px) */
+  object-fit: cover;
+  /* border-radius: 50%; 이미지가 원형일 경우, 캐릭터 모양에 따라 조정 */
 }
 
 .chat-window {
@@ -172,11 +198,24 @@ const sendMessage = async () => {
   flex-direction: column;
 }
 
+.message-wrapper {
+  display: flex;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.message-wrapper.user-wrapper {
+  justify-content: flex-end;
+}
+
+.message-wrapper.bot-wrapper {
+  justify-content: flex-start;
+}
+
 .message-bubble {
   max-width: 80%;
   padding: 8px 12px;
   border-radius: 15px;
-  margin-bottom: 10px;
   font-size: 0.9em;
   word-wrap: break-word;
 }
@@ -184,17 +223,38 @@ const sendMessage = async () => {
 .message-bubble.user {
   background-color: #007bff;
   color: white;
-  align-self: flex-end;
   border-bottom-right-radius: 5px;
 }
 
 .message-bubble.bot {
+  background-color: transparent;
+  padding: 0;
+  display: flex;
+}
+
+.bot-message-content {
+  display: flex;
+  align-items: flex-start;
   background-color: #e9ecef;
   color: #333;
-  align-self: flex-start;
+  padding: 8px 12px;
+  border-radius: 15px;
   border-bottom-left-radius: 5px;
 }
 
+/* 봇 아바타 이미지 스타일 수정 */
+.bot-avatar {
+  width: 50px;   /* 기존 30px 에서 크기 증가 (예: 40px) */
+  height: 50px;  /* 기존 30px 에서 크기 증가 (예: 40px) */
+  border-radius: 50%;
+  margin-right: 10px; /* 텍스트와의 간격, 필요시 조정 */
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.message-bubble.bot .bot-message-content p {
+  margin: 0;
+}
 
 .chat-footer {
   display: flex;

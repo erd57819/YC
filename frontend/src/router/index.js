@@ -23,9 +23,9 @@ const router = createRouter({
       component: ArticleView
     },
     {
-      path: '/articles/edit',
+      path: '/articles/:id/edit',
       name: 'ArticleEditView',
-      component: ArticleEditView
+      component: ArticleEditView 
     },
     {
       path: '/articles/:id',

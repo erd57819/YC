@@ -37,6 +37,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'articles',
     'accounts',
+    'financials',
+    'golds',
     'rest_framework',
     'rest_framework.authtoken',
     'dj_rest_auth',

@@ -1,0 +1,920 @@
+[
+  {
+    "model": "golds.silver",
+    "pk": 1,
+    "fields": {
+      "price_date": "2023-01-09T00:00:00Z",
+      "high_price": "23.95",
+      "low_price": "23.51"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 2,
+    "fields": {
+      "price_date": "2023-01-11T00:00:00Z",
+      "high_price": "24.12",
+      "low_price": "23.32"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 3,
+    "fields": {
+      "price_date": "2023-01-12T00:00:00Z",
+      "high_price": "24.51",
+      "low_price": "23.94"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 4,
+    "fields": {
+      "price_date": "2023-02-10T00:00:00Z",
+      "high_price": "22.21",
+      "low_price": "21.94"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 5,
+    "fields": {
+      "price_date": "2023-02-11T00:00:00Z",
+      "high_price": "24.01",
+      "low_price": "23.87"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 6,
+    "fields": {
+      "price_date": "2023-03-10T00:00:00Z",
+      "high_price": "20.73",
+      "low_price": "20.10"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 7,
+    "fields": {
+      "price_date": "2023-03-11T00:00:00Z",
+      "high_price": "24.11",
+      "low_price": "23.91"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 8,
+    "fields": {
+      "price_date": "2023-04-10T00:00:00Z",
+      "high_price": "25.26",
+      "low_price": "24.81"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 9,
+    "fields": {
+      "price_date": "2023-04-12T00:00:00Z",
+      "high_price": "25.85",
+      "low_price": "25.33"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 10,
+    "fields": {
+      "price_date": "2023-05-09T00:00:00Z",
+      "high_price": "25.86",
+      "low_price": "25.43"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 11,
+    "fields": {
+      "price_date": "2023-05-10T00:00:00Z",
+      "high_price": "25.35",
+      "low_price": "24.90"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 12,
+    "fields": {
+      "price_date": "2023-05-12T00:00:00Z",
+      "high_price": "24.51",
+      "low_price": "23.90"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 13,
+    "fields": {
+      "price_date": "2023-06-09T00:00:00Z",
+      "high_price": "24.60",
+      "low_price": "24.23"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 14,
+    "fields": {
+      "price_date": "2023-06-10T00:00:00Z",
+      "high_price": "24.11",
+      "low_price": "23.88"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 15,
+    "fields": {
+      "price_date": "2023-06-11T00:00:00Z",
+      "high_price": "24.01",
+      "low_price": "23.90"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 16,
+    "fields": {
+      "price_date": "2023-06-12T00:00:00Z",
+      "high_price": "24.38",
+      "low_price": "24.08"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 17,
+    "fields": {
+      "price_date": "2023-07-09T00:00:00Z",
+      "high_price": "23.40",
+      "low_price": "23.11"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 18,
+    "fields": {
+      "price_date": "2023-07-11T00:00:00Z",
+      "high_price": "23.38",
+      "low_price": "23.00"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 19,
+    "fields": {
+      "price_date": "2023-07-12T00:00:00Z",
+      "high_price": "24.30",
+      "low_price": "23.81"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 20,
+    "fields": {
+      "price_date": "2023-08-09T00:00:00Z",
+      "high_price": "22.95",
+      "low_price": "22.68"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 21,
+    "fields": {
+      "price_date": "2023-08-11T00:00:00Z",
+      "high_price": "22.84",
+      "low_price": "22.63"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 22,
+    "fields": {
+      "price_date": "2023-08-12T00:00:00Z",
+      "high_price": "23.01",
+      "low_price": "22.87"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 23,
+    "fields": {
+      "price_date": "2023-08-18T00:00:00Z",
+      "high_price": "22.94",
+      "low_price": "22.69"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 24,
+    "fields": {
+      "price_date": "2023-08-21T00:00:00Z",
+      "high_price": "23.44",
+      "low_price": "23.06"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 25,
+    "fields": {
+      "price_date": "2023-08-22T00:00:00Z",
+      "high_price": "23.63",
+      "low_price": "23.23"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 26,
+    "fields": {
+      "price_date": "2023-08-23T00:00:00Z",
+      "high_price": "24.47",
+      "low_price": "23.95"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 27,
+    "fields": {
+      "price_date": "2023-08-24T00:00:00Z",
+      "high_price": "24.37",
+      "low_price": "24.03"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 28,
+    "fields": {
+      "price_date": "2023-08-25T00:00:00Z",
+      "high_price": "24.31",
+      "low_price": "23.91"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 29,
+    "fields": {
+      "price_date": "2023-08-28T00:00:00Z",
+      "high_price": "24.62",
+      "low_price": "24.16"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 30,
+    "fields": {
+      "price_date": "2023-08-29T00:00:00Z",
+      "high_price": "25.06",
+      "low_price": "24.51"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 31,
+    "fields": {
+      "price_date": "2023-08-30T00:00:00Z",
+      "high_price": "25.08",
+      "low_price": "24.71"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 32,
+    "fields": {
+      "price_date": "2023-08-31T00:00:00Z",
+      "high_price": "24.92",
+      "low_price": "24.36"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 33,
+    "fields": {
+      "price_date": "2023-09-10T00:00:00Z",
+      "high_price": "23.01",
+      "low_price": "22.88"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 34,
+    "fields": {
+      "price_date": "2023-09-11T00:00:00Z",
+      "high_price": "23.41",
+      "low_price": "23.01"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 35,
+    "fields": {
+      "price_date": "2023-09-13T00:00:00Z",
+      "high_price": "23.27",
+      "low_price": "22.82"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 36,
+    "fields": {
+      "price_date": "2023-09-14T00:00:00Z",
+      "high_price": "23.08",
+      "low_price": "22.56"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 37,
+    "fields": {
+      "price_date": "2023-09-15T00:00:00Z",
+      "high_price": "23.50",
+      "low_price": "22.95"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 38,
+    "fields": {
+      "price_date": "2023-09-18T00:00:00Z",
+      "high_price": "23.47",
+      "low_price": "23.16"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 39,
+    "fields": {
+      "price_date": "2023-09-19T00:00:00Z",
+      "high_price": "23.51",
+      "low_price": "23.25"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 40,
+    "fields": {
+      "price_date": "2023-09-20T00:00:00Z",
+      "high_price": "23.90",
+      "low_price": "23.25"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 41,
+    "fields": {
+      "price_date": "2023-09-21T00:00:00Z",
+      "high_price": "23.70",
+      "low_price": "23.15"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 42,
+    "fields": {
+      "price_date": "2023-09-22T00:00:00Z",
+      "high_price": "23.86",
+      "low_price": "23.63"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 43,
+    "fields": {
+      "price_date": "2023-09-25T00:00:00Z",
+      "high_price": "23.83",
+      "low_price": "23.36"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 44,
+    "fields": {
+      "price_date": "2023-09-26T00:00:00Z",
+      "high_price": "23.18",
+      "low_price": "22.86"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 45,
+    "fields": {
+      "price_date": "2023-09-27T00:00:00Z",
+      "high_price": "23.00",
+      "low_price": "22.56"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 46,
+    "fields": {
+      "price_date": "2023-09-28T00:00:00Z",
+      "high_price": "22.75",
+      "low_price": "22.42"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 47,
+    "fields": {
+      "price_date": "2023-09-29T00:00:00Z",
+      "high_price": "23.23",
+      "low_price": "22.13"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 48,
+    "fields": {
+      "price_date": "2023-10-10T00:00:00Z",
+      "high_price": "22.01",
+      "low_price": "21.73"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 49,
+    "fields": {
+      "price_date": "2023-10-11T00:00:00Z",
+      "high_price": "22.12",
+      "low_price": "21.84"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 50,
+    "fields": {
+      "price_date": "2023-10-13T00:00:00Z",
+      "high_price": "22.95",
+      "low_price": "21.90"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 51,
+    "fields": {
+      "price_date": "2023-10-16T00:00:00Z",
+      "high_price": "22.84",
+      "low_price": "22.56"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 52,
+    "fields": {
+      "price_date": "2023-10-17T00:00:00Z",
+      "high_price": "23.01",
+      "low_price": "22.61"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 53,
+    "fields": {
+      "price_date": "2023-10-18T00:00:00Z",
+      "high_price": "23.33",
+      "low_price": "22.84"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 54,
+    "fields": {
+      "price_date": "2023-10-19T00:00:00Z",
+      "high_price": "23.40",
+      "low_price": "22.88"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 55,
+    "fields": {
+      "price_date": "2023-10-20T00:00:00Z",
+      "high_price": "23.77",
+      "low_price": "23.27"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 56,
+    "fields": {
+      "price_date": "2023-10-23T00:00:00Z",
+      "high_price": "23.29",
+      "low_price": "23.06"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 57,
+    "fields": {
+      "price_date": "2023-10-24T00:00:00Z",
+      "high_price": "23.22",
+      "low_price": "22.88"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 58,
+    "fields": {
+      "price_date": "2023-10-25T00:00:00Z",
+      "high_price": "23.11",
+      "low_price": "22.65"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 59,
+    "fields": {
+      "price_date": "2023-10-26T00:00:00Z",
+      "high_price": "23.21",
+      "low_price": "22.61"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 60,
+    "fields": {
+      "price_date": "2023-10-27T00:00:00Z",
+      "high_price": "23.33",
+      "low_price": "22.75"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 61,
+    "fields": {
+      "price_date": "2023-10-30T00:00:00Z",
+      "high_price": "23.51",
+      "low_price": "23.22"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 62,
+    "fields": {
+      "price_date": "2023-10-31T00:00:00Z",
+      "high_price": "23.32",
+      "low_price": "22.68"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 63,
+    "fields": {
+      "price_date": "2023-11-09T00:00:00Z",
+      "high_price": "22.70",
+      "low_price": "22.50"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 64,
+    "fields": {
+      "price_date": "2023-11-10T00:00:00Z",
+      "high_price": "22.42",
+      "low_price": "22.13"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 65,
+    "fields": {
+      "price_date": "2023-11-12T00:00:00Z",
+      "high_price": "22.55",
+      "low_price": "22.41"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 66,
+    "fields": {
+      "price_date": "2023-11-13T00:00:00Z",
+      "high_price": "22.65",
+      "low_price": "22.06"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 67,
+    "fields": {
+      "price_date": "2023-11-14T00:00:00Z",
+      "high_price": "23.51",
+      "low_price": "22.36"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 68,
+    "fields": {
+      "price_date": "2023-11-15T00:00:00Z",
+      "high_price": "23.63",
+      "low_price": "23.23"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 69,
+    "fields": {
+      "price_date": "2023-11-16T00:00:00Z",
+      "high_price": "24.23",
+      "low_price": "23.58"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 70,
+    "fields": {
+      "price_date": "2023-11-17T00:00:00Z",
+      "high_price": "24.08",
+      "low_price": "23.67"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 71,
+    "fields": {
+      "price_date": "2023-11-20T00:00:00Z",
+      "high_price": "23.86",
+      "low_price": "23.49"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 72,
+    "fields": {
+      "price_date": "2023-11-21T00:00:00Z",
+      "high_price": "24.16",
+      "low_price": "23.70"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 73,
+    "fields": {
+      "price_date": "2023-11-22T00:00:00Z",
+      "high_price": "23.94",
+      "low_price": "23.61"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 74,
+    "fields": {
+      "price_date": "2023-11-24T00:00:00Z",
+      "high_price": "24.87",
+      "low_price": "24.31"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 75,
+    "fields": {
+      "price_date": "2023-11-27T00:00:00Z",
+      "high_price": "24.88",
+      "low_price": "24.51"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 76,
+    "fields": {
+      "price_date": "2023-11-28T00:00:00Z",
+      "high_price": "25.26",
+      "low_price": "24.71"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 77,
+    "fields": {
+      "price_date": "2023-11-29T00:00:00Z",
+      "high_price": "25.55",
+      "low_price": "25.10"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 78,
+    "fields": {
+      "price_date": "2023-11-30T00:00:00Z",
+      "high_price": "25.49",
+      "low_price": "25.13"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 79,
+    "fields": {
+      "price_date": "2023-12-09T00:00:00Z",
+      "high_price": "23.11",
+      "low_price": "22.91"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 80,
+    "fields": {
+      "price_date": "2023-12-10T00:00:00Z",
+      "high_price": "23.01",
+      "low_price": "22.86"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 81,
+    "fields": {
+      "price_date": "2023-12-12T00:00:00Z",
+      "high_price": "23.05",
+      "low_price": "22.68"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 82,
+    "fields": {
+      "price_date": "2023-12-13T00:00:00Z",
+      "high_price": "24.40",
+      "low_price": "22.75"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 83,
+    "fields": {
+      "price_date": "2023-12-14T00:00:00Z",
+      "high_price": "24.37",
+      "low_price": "24.01"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 84,
+    "fields": {
+      "price_date": "2023-12-15T00:00:00Z",
+      "high_price": "24.35",
+      "low_price": "23.86"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 85,
+    "fields": {
+      "price_date": "2023-12-18T00:00:00Z",
+      "high_price": "24.36",
+      "low_price": "23.95"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 86,
+    "fields": {
+      "price_date": "2023-12-19T00:00:00Z",
+      "high_price": "24.52",
+      "low_price": "24.08"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 87,
+    "fields": {
+      "price_date": "2023-12-20T00:00:00Z",
+      "high_price": "24.52",
+      "low_price": "24.23"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 88,
+    "fields": {
+      "price_date": "2023-12-21T00:00:00Z",
+      "high_price": "24.63",
+      "low_price": "24.30"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 89,
+    "fields": {
+      "price_date": "2023-12-22T00:00:00Z",
+      "high_price": "24.73",
+      "low_price": "24.44"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 90,
+    "fields": {
+      "price_date": "2023-12-26T00:00:00Z",
+      "high_price": "24.47",
+      "low_price": "24.28"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 91,
+    "fields": {
+      "price_date": "2023-12-27T00:00:00Z",
+      "high_price": "24.50",
+      "low_price": "24.16"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 92,
+    "fields": {
+      "price_date": "2023-12-28T00:00:00Z",
+      "high_price": "24.44",
+      "low_price": "23.90"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 93,
+    "fields": {
+      "price_date": "2023-12-29T00:00:00Z",
+      "high_price": "24.11",
+      "low_price": "23.78"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 94,
+    "fields": {
+      "price_date": "2024-01-16T00:00:00Z",
+      "high_price": "23.41",
+      "low_price": "22.90"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 95,
+    "fields": {
+      "price_date": "2024-01-17T00:00:00Z",
+      "high_price": "22.95",
+      "low_price": "22.51"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 96,
+    "fields": {
+      "price_date": "2024-01-18T00:00:00Z",
+      "high_price": "22.93",
+      "low_price": "22.42"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 97,
+    "fields": {
+      "price_date": "2024-01-19T00:00:00Z",
+      "high_price": "22.84",
+      "low_price": "22.25"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 98,
+    "fields": {
+      "price_date": "2024-01-22T00:00:00Z",
+      "high_price": "22.56",
+      "low_price": "22.12"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 99,
+    "fields": {
+      "price_date": "2024-02-01T00:00:00Z",
+      "high_price": "25.21",
+      "low_price": "24.87"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 100,
+    "fields": {
+      "price_date": "2024-03-01T00:00:00Z",
+      "high_price": "23.32",
+      "low_price": "22.92"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 101,
+    "fields": {
+      "price_date": "2024-04-01T00:00:00Z",
+      "high_price": "25.26",
+      "low_price": "24.80"
+    }
+  },
+  {
+    "model": "golds.silver",
+    "pk": 102,
+    "fields": {
+      "price_date": "2024-05-01T00:00:00Z",
+      "high_price": "26.97",
+      "low_price": "26.17"
+    }
+  }
+]

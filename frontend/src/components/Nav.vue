@@ -16,6 +16,9 @@
           <li class="nav-item">
             <RouterLink class="nav-link" :to="{ name: 'SearchView' }">관심사 찾기</RouterLink>
           </li>
+          <li class="nav-item">
+            <RouterLink class="nav-link" :to="{ name: 'GoldView' }">현물 시세</RouterLink>
+          </li>
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item" v-if="!accountStore.isLogin">

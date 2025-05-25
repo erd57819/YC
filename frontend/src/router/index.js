@@ -8,7 +8,10 @@ import LogInView from '@/views/LogInView.vue'; //
 import BankFinder from '@/views/BankFinder.vue'; 
 import SearchView from '@/views/SearchView.vue'; //
 import VideoDetailView from '@/views/VideoDetailView.vue';
-import ArticleEditView from '@/views/ArticleEditView.vue'; // Import the VideoDetailView component
+import ArticleEditView from '@/views/ArticleEditView.vue'; 
+import SilverView from '@/views/SilverView.vue';
+import GoldView from '@/views/GoldView.vue';
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -61,6 +64,16 @@ const router = createRouter({
       name: 'video',
       component: VideoDetailView,
       props: true },
+    {
+      path: '/gold',
+      name: 'GoldView',
+      component: GoldView
+    },
+    {
+      path: '/silver',
+      name: 'SilverView ',
+      component: SilverView 
+    },
 
   ]
 });

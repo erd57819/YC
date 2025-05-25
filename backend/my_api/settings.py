@@ -168,3 +168,15 @@ REST_AUTH = {
     'REGISTER_SERIALIZER': 'accounts.serializers.CustomRegisterSerializer',
     'USER_DETAILS_SERIALIZER': 'accounts.serializers.UserProfileSerializer',
 }
+
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = (
+    'django-insecure-@fn#327r=8uv%&a25(l(jc-e5ir*pu)v_%cyy*l%u@o)(^fnzs'
+)
+
+# 여기에 금융감독원 API 키를 추가합니다.
+FSS_API_KEY = '1bdd94783e506b21030a50af187f2450' # 여기에 실제 발급받은 API 키를 입력하세요.
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True

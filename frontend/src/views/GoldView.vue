@@ -27,13 +27,11 @@ const store = useGoldStore();
 // 스토어에서 goldData를 반응형 참조로 가져옵니다.
 const { goldData: fetchedGoldPriceData } = storeToRefs(store);
 
-// --- 상태 관리 (날짜) - 기존 코드 유지 ---
 const startYear = ref(2024);
 const startMonth = ref(8);
 const endYear = ref(2024);
 const endMonth = ref(8);
 
-// --- 컴포넌트가 마운트될 때 데이터 가져오기 ---
 onMounted(() => {
   store.fetchGoldData(); // 스토어 액션을 호출하여 금 시세 데이터를 가져옵니다.
 });

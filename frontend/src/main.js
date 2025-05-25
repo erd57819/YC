@@ -15,3 +15,4 @@ app.use(router);
 
 useMapStore(); 
 app.mount('#app');
+// window.router = router

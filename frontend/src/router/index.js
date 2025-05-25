@@ -71,7 +71,7 @@ const router = createRouter({
     },
     {
       path: '/silver',
-      name: 'SilverView ',
+      name: 'SilverView',
       component: SilverView 
     },
 

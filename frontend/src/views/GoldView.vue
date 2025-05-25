@@ -13,50 +13,83 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue'; // onMounted 추가
 import { Line } from 'vue-chartjs';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import GoodsVue from '@/components/goods.vue';
+import { useGoldStore } from '@/stores/golds'; // Pinia 스토어 임포트
+import { storeToRefs } from 'pinia'; // storeToRefs 임포트
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-// --- 상태 관리 (날짜) ---
+// --- Pinia 스토어 사용 설정 ---
+const store = useGoldStore();
+// 스토어에서 goldData를 반응형 참조로 가져옵니다.
+const { goldData: fetchedGoldPriceData } = storeToRefs(store);
+
+// --- 상태 관리 (날짜) - 기존 코드 유지 ---
 const startYear = ref(2024);
 const startMonth = ref(8);
 const endYear = ref(2024);
 const endMonth = ref(8);
 
-// --- 차트 데이터 (은 전용) ---
-const priceData = {
-  silver: [22, 24, 23, 26, 25, 28, 26, 30, 29, 32, 30, 35, 31, 33, 30, 34, 32, 36],
-};
-const labels = ref(Array.from({ length: 18 }, (_, i) => (i % 2 === 0 ? i + 2 : '')));
+// --- 컴포넌트가 마운트될 때 데이터 가져오기 ---
+onMounted(() => {
+  store.fetchGoldData(); // 스토어 액션을 호출하여 금 시세 데이터를 가져옵니다.
+});
 
-const chartData = computed(() => ({
-  labels: labels.value,
-  datasets: [{
-    label: '은 가격',
-    borderColor: '#4A90E2',
-    data: priceData.silver,
-    tension: 0.4,
-    borderWidth: 2,
-    pointBackgroundColor: 'white',
-    pointBorderColor: '#4A90E2',
-    pointHoverRadius: 8,
-    pointHoverBorderWidth: 3,
-  }],
-}));
+// --- 차트 데이터 (스토어에서 가져온 동적 데이터 사용) ---
+const chartData = computed(() => {
+  // fetchedGoldPriceData.value가 없거나 비어있으면 기본 차트 구조 반환
+  if (!fetchedGoldPriceData.value || fetchedGoldPriceData.value.length === 0) {
+    return {
+      labels: [], // 초기 라벨은 비워둡니다.
+      datasets: [{
+        label: '금 가격',
+        borderColor: '#E6B333', // 금색 계열로 변경 (기존 #4A90E2)
+        data: [],
+        tension: 0.4,
+        borderWidth: 2,
+        pointBackgroundColor: 'white',
+        pointBorderColor: '#E6B333',
+        pointHoverRadius: 8,
+        pointHoverBorderWidth: 3,
+      }],
+    };
+  }
 
+  // 날짜순으로 정렬 (API 응답이 이미 정렬되어 있다면 생략 가능)
+  const sortedData = [...fetchedGoldPriceData.value].sort((a, b) => new Date(a.price_date) - new Date(b.price_date));
+
+  return {
+    labels: sortedData.map(item => new Date(item.price_date).toLocaleDateString()), // 날짜 데이터로 라벨 설정
+    datasets: [{
+      label: '금 가격', // 또는 '고가', '평균가' 등 필요에 따라 수정
+      borderColor: '#E6B333', // 금색 계열
+      // API에서 받은 데이터 중 'low_price' 또는 'high_price'를 사용합니다.
+      // 여기서는 예시로 'low_price'를 사용합니다. 필요에 따라 'high_price' 등으로 변경하세요.
+      data: sortedData.map(item => parseFloat(item.high_price)),
+      tension: 0.4,
+      borderWidth: 2,
+      pointBackgroundColor: 'white',
+      pointBorderColor: '#E6B333',
+      pointHoverRadius: 8,
+      pointHoverBorderWidth: 3,
+    }],
+  };
+});
+
+// --- 차트 옵션 - 기존 코드 유지 ---
 const chartOptions = ref({
   responsive: true,
   maintainAspectRatio: false,
-  plugins: { legend: { display: false } },
+  plugins: { legend: { display: false } }, // 범례는 표시하지 않음 (기존 설정 유지)
   scales: {
     y: { beginAtZero: false },
     x: { grid: { display: false }, ticks: { align: 'start' } },
   },
   interaction: { mode: 'index', intersect: false },
-  elements: { point: { radius: 0 } },
+  elements: { point: { radius: 0 } }, // 기본적으로 점은 표시하지 않음 (기존 설정 유지)
 });
 </script>
 

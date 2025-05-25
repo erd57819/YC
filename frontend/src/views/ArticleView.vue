@@ -12,7 +12,7 @@
         </button>
       </div>
       
-      <div class="date-filter-box">
+      <div class="date-filter-box"> 
         <span>2024-08-27 ~ 2024-05-01</span>
         <span class="dropdown-arrow">▼</span>
       </div>

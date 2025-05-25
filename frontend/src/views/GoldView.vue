@@ -7,44 +7,43 @@
       v-model:endMonth="endMonth"
     />
     <div class="chart-wrapper">
-      <Line :data="chartData" :options="chartOptions" />
+      <Line v-if="chartData.labels.length" :data="chartData" :options="chartOptions" />
+      <div v-else class="no-data-message">
+        <p>선택된 기간에 해당하는 데이터가 없습니다. 다른 날짜를 선택해주세요.</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'; // onMounted 추가
+import { ref, computed, onMounted } from 'vue';
 import { Line } from 'vue-chartjs';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import GoodsVue from '@/components/goods.vue';
-import { useGoldStore } from '@/stores/golds'; // Pinia 스토어 임포트
-import { storeToRefs } from 'pinia'; // storeToRefs 임포트
+import { useGoldStore } from '@/stores/golds';
+import { storeToRefs } from 'pinia';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-// --- Pinia 스토어 사용 설정 ---
 const store = useGoldStore();
-// 스토어에서 goldData를 반응형 참조로 가져옵니다.
 const { goldData: fetchedGoldPriceData } = storeToRefs(store);
 
 const startYear = ref(2024);
-const startMonth = ref(8);
+const startMonth = ref(1); // 시작 월을 1월로 변경하여 초기 데이터 범위를 넓힙니다.
 const endYear = ref(2024);
-const endMonth = ref(8);
+const endMonth = ref(new Date().getMonth() + 1);
 
 onMounted(() => {
-  store.fetchGoldData(); // 스토어 액션을 호출하여 금 시세 데이터를 가져옵니다.
+  store.fetchGoldData();
 });
 
-// --- 차트 데이터 (스토어에서 가져온 동적 데이터 사용) ---
 const chartData = computed(() => {
-  // fetchedGoldPriceData.value가 없거나 비어있으면 기본 차트 구조 반환
   if (!fetchedGoldPriceData.value || fetchedGoldPriceData.value.length === 0) {
     return {
-      labels: [], // 초기 라벨은 비워둡니다.
+      labels: [],
       datasets: [{
         label: '금 가격',
-        borderColor: '#E6B333', // 금색 계열로 변경 (기존 #4A90E2)
+        borderColor: '#E6B333',
         data: [],
         tension: 0.4,
         borderWidth: 2,
@@ -56,16 +55,26 @@ const chartData = computed(() => {
     };
   }
 
-  // 날짜순으로 정렬 (API 응답이 이미 정렬되어 있다면 생략 가능)
-  const sortedData = [...fetchedGoldPriceData.value].sort((a, b) => new Date(a.price_date) - new Date(b.price_date));
+  // --- 날짜 필터링 기능 추가 ---
+  // 시작일(1일)과 종료일(해당 월의 마지막 날)을 Date 객체로 생성
+  const startDate = new Date(startYear.value, startMonth.value - 1, 1);
+  const endDate = new Date(endYear.value, endMonth.value, 0, 23, 59, 59);
+
+  // 선택된 날짜 범위에 맞는 데이터만 필터링
+  const filteredData = fetchedGoldPriceData.value.filter(item => {
+    const itemDate = new Date(item.price_date);
+    return itemDate >= startDate && itemDate <= endDate;
+  });
+  // --- 필터링 로직 끝 ---
+
+  // 필터링된 데이터를 날짜순으로 정렬
+  const sortedData = [...filteredData].sort((a, b) => new Date(a.price_date) - new Date(b.price_date));
 
   return {
-    labels: sortedData.map(item => new Date(item.price_date).toLocaleDateString()), // 날짜 데이터로 라벨 설정
+    labels: sortedData.map(item => new Date(item.price_date).toLocaleDateString()),
     datasets: [{
-      label: '금 가격', // 또는 '고가', '평균가' 등 필요에 따라 수정
-      borderColor: '#E6B333', // 금색 계열
-      // API에서 받은 데이터 중 'low_price' 또는 'high_price'를 사용합니다.
-      // 여기서는 예시로 'low_price'를 사용합니다. 필요에 따라 'high_price' 등으로 변경하세요.
+      label: '금 가격',
+      borderColor: '#E6B333',
       data: sortedData.map(item => parseFloat(item.high_price)),
       tension: 0.4,
       borderWidth: 2,
@@ -77,17 +86,16 @@ const chartData = computed(() => {
   };
 });
 
-// --- 차트 옵션 - 기존 코드 유지 ---
 const chartOptions = ref({
   responsive: true,
   maintainAspectRatio: false,
-  plugins: { legend: { display: false } }, // 범례는 표시하지 않음 (기존 설정 유지)
+  plugins: { legend: { display: false } },
   scales: {
     y: { beginAtZero: false },
     x: { grid: { display: false }, ticks: { align: 'start' } },
   },
   interaction: { mode: 'index', intersect: false },
-  elements: { point: { radius: 0 } }, // 기본적으로 점은 표시하지 않음 (기존 설정 유지)
+  elements: { point: { radius: 0 } },
 });
 </script>
 
@@ -102,5 +110,13 @@ const chartOptions = ref({
 }
 .chart-wrapper {
   height: 350px;
+  position: relative;
+}
+.no-data-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #6c757d;
 }
 </style>

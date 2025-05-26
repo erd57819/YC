@@ -31,7 +31,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="product in financialStore.depositProducts" :key="product.id" @click="goToDetail(product.id)">
+        <tr v-for="product in financialStore.depositProducts" :key="`${product.id}-${product.save_trm}`" @click="goToDetail(product.id)">
           <td>{{ product.dcls_month }}</td>
           <td>{{ product.kor_co_nm }}</td>
           <td>{{ product.fin_prdt_nm }}</td>

@@ -12,9 +12,7 @@ def save_financial_products(request):
     금융감독원 API로부터 예금 및 적금 상품 목록을 받아와 DB에 저장합니다.
     """
     api_key = settings.FSS_API_KEY
-    # 예금 상품 목록
     deposit_url = f'http://finlife.fss.or.kr/finlifeapi/depositProductsSearch.json?auth={api_key}&topFinGrpNo=020000&pageNo=1'
-    # 적금 상품 목록
     saving_url = f'http://finlife.fss.or.kr/finlifeapi/savingProductsSearch.json?auth={api_key}&topFinGrpNo=020000&pageNo=1'
 
     # 예금 데이터 저장
@@ -31,8 +29,13 @@ def save_financial_products(request):
                     'join_member': product_data['join_member'],
                     'join_way': product_data['join_way'],
                     'spcl_cnd': product_data['spcl_cnd'],
+                    'dcls_month': product_data.get('dcls_month'),
+                    'fin_co_no': product_data.get('fin_co_no'),
+                    'mtrt_int': product_data.get('mtrt_int'), # baseList에 포함된다면
+                    'max_limit': product_data.get('max_limit'), # baseList에 포함된다면
                 }
             )
+            # DepositOption은 intr_rate, intr_rate2만 가져오도록 유지
             for option_data in deposit_response['result']['optionList']:
                 if option_data['fin_prdt_cd'] == product_data['fin_prdt_cd']:
                     DepositOption.objects.update_or_create(
@@ -47,6 +50,8 @@ def save_financial_products(request):
                     )
     except requests.exceptions.RequestException as e:
         return Response({'error': f"예금 API 요청 오류: {e}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    except Exception as e: # 예상치 못한 다른 오류도 잡기
+        return Response({'error': f"예금 데이터 처리 중 오류 발생: {e}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
     # 적금 데이터 저장
@@ -63,8 +68,13 @@ def save_financial_products(request):
                     'join_member': product_data['join_member'],
                     'join_way': product_data['join_way'],
                     'spcl_cnd': product_data['spcl_cnd'],
+                    'dcls_month': product_data.get('dcls_month'),
+                    'fin_co_no': product_data.get('fin_co_no'),
+                    'mtrt_int': product_data.get('mtrt_int'), # baseList에 포함된다면
+                    'max_limit': product_data.get('max_limit'), # baseList에 포함된다면
                 }
             )
+            # SavingOption은 intr_rate, intr_rate2, rsrv_type, rsrv_type_nm 만 가져오도록 유지
             for option_data in saving_response['result']['optionList']:
                 if option_data['fin_prdt_cd'] == product_data['fin_prdt_cd']:
                     SavingOption.objects.update_or_create(
@@ -81,6 +91,8 @@ def save_financial_products(request):
                     )
     except requests.exceptions.RequestException as e:
         return Response({'error': f"적금 API 요청 오류: {e}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    except Exception as e: # 예상치 못한 다른 오류도 잡기
+        return Response({'error': f"적금 데이터 처리 중 오류 발생: {e}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     return Response({"message": "금융 상품 정보가 성공적으로 저장되었습니다."}, status=status.HTTP_200_OK)
 
@@ -114,3 +126,4 @@ def saving_product_detail(request, pk):
         return Response(serializer.data)
     except SavingProduct.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+

@@ -50,10 +50,8 @@ const editableUser = ref({
   wealth: null,
 });
 
-// 스토어의 user 정보가 변경될 때마다 editableUser를 갱신합니다.
 watch(() => accountStore.user, (newUser) => {
   if (newUser) {
-    // 스토어 객체를 직접 수정하지 않도록 복사해서 사용합니다.
     editableUser.value = { ...newUser };
   }
 }, { immediate: true });
@@ -70,7 +68,6 @@ const updateProfile = () => {
 </script>
 
 <style scoped>
-/* 사용자가 제공한 스타일과 동일하게 유지 */
 .info-item {
   display: flex;
   align-items: center;

@@ -21,18 +21,17 @@ const props = defineProps({
 
 const chartData = computed(() => {
   const labels = [];
-  const baseRates = []; // 저축 금리
-  const primeRates = []; // 최고 우대금리
+  const baseRates = []; 
+  const primeRates = []; 
 
   props.products.forEach(sub => {
     const product = sub.product_info;
     labels.push(`[${product.kor_co_nm}] ${product.fin_prdt_nm.substring(0, 10)}..`);
     
-    // 옵션 중에서 12개월 기준 금리 또는 가장 높은 금리를 찾습니다.
     const options = product.options;
     let bestOption = null;
     if (options && options.length > 0) {
-      bestOption = options.find(o => o.save_trm === '12') || // save_trm이 문자열 '12'일 수 있으므로 수정
+      bestOption = options.find(o => o.save_trm === '12') || 
                    options.reduce((max, o) => (parseFloat(o.intr_rate2) > parseFloat(max.intr_rate2) ? o : max), options[0]);
     }
     
@@ -45,7 +44,7 @@ const chartData = computed(() => {
     datasets: [
       {
         label: '저축 금리 (%)',
-        backgroundColor: '#0d6efd', // Bootstrap primary color
+        backgroundColor: '#0d6efd',
         data: baseRates,
         borderRadius: 4,
         barPercentage: 0.7,
@@ -53,7 +52,7 @@ const chartData = computed(() => {
       },
       {
         label: '최고 우대금리 (%)',
-        backgroundColor: '#6c757d', // Bootstrap secondary color
+        backgroundColor: '#6c757d',
         data: primeRates,
         borderRadius: 4,
         barPercentage: 0.7,
@@ -65,7 +64,7 @@ const chartData = computed(() => {
 
 const chartOptions = {
   responsive: true,
-  maintainAspectRatio: false, // 비율 유지를 false로 하여 높이 조절 가능
+  maintainAspectRatio: false, 
   scales: {
     y: {
       beginAtZero: true,
@@ -82,7 +81,7 @@ const chartOptions = {
     x: {
       ticks: {
         font: {
-          size: 10 // X축 레이블 폰트 크기 조정
+          size: 10 
         }
       }
     }
@@ -92,8 +91,7 @@ const chartOptions = {
       position: 'top',
     },
     title: {
-      display: false, // 차트 자체의 제목은 부모에서 관리하므로 false
-      // text: '가입 상품 금리 비교' 
+      display: false, 
     },
     tooltip: {
       callbacks: {

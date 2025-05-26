@@ -41,18 +41,16 @@ import { ref, onMounted, computed, defineAsyncComponent } from 'vue';
 import { useAccountStore } from '@/stores/accounts';
 
 const accountStore = useAccountStore();
-const activeView = ref('info'); // 기본으로 '기본 정보 수정'을 보여줌
+const activeView = ref('info');
 
-// 동적 컴포넌트 로딩
-const UserInfoEdit = defineAsyncComponent(() => import('@/components/UserInfoEdit.vue'));
-const PortfolioView = defineAsyncComponent(() => import('@/components/PortfolioView.vue'));
+// 경로 수정: components -> views
+const UserInfoEdit = defineAsyncComponent(() => import('@/views/UserInfoEdit.vue'));
+const PortfolioView = defineAsyncComponent(() => import('@/views/PortfolioView.vue'));
 
 onMounted(() => {
-  // 컴포넌트 마운트 시 사용자 정보를 가져옵니다.
   accountStore.fetchUser();
 });
 
-// activeView 값에 따라 현재 보여줄 컴포넌트를 결정
 const currentViewComponent = computed(() => {
   if (activeView.value === 'info') {
     return UserInfoEdit;
@@ -63,7 +61,7 @@ const currentViewComponent = computed(() => {
 </script>
 
 <style scoped>
-/* 사용자가 제공한 스타일과 동일하게 유지 */
+/* 스타일은 이전과 동일 */
 .profile-container {
   max-width: 960px;
   margin: auto;
@@ -90,7 +88,6 @@ const currentViewComponent = computed(() => {
 .sidebar .nav-link:not(.active):hover {
   background-color: #f8f9fa;
 }
-
 .content {
   flex-grow: 1;
   padding-left: 30px;

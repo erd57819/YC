@@ -27,7 +27,8 @@
 import { computed } from 'vue';
 import { useAccountStore } from '@/stores/accounts';
 import { useFinancialStore } from '@/stores/financials';
-import SubscribedProductsChart from '@/components/SubscribedProductsChart.vue';
+// 경로 수정: components -> views (또는 상대 경로 ./)
+import SubscribedProductsChart from './SubscribedProductsChart.vue'; // 또는 @/views/SubscribedProductsChart.vue
 
 const accountStore = useAccountStore();
 const financialStore = useFinancialStore();

@@ -124,7 +124,7 @@ const sendMessage = async () => {
         // 현재 사용자 메시지 포함
         { role: 'user', content: userMessage }
       ],
-      model: 'gpt-3.5-turbo', // 필요시 'gpt-4' 등 다른 모델로 변경 가능
+      model: 'ft:gpt-4o-mini-2024-07-18:personal::BbMFkAM0', // 필요시 'gpt-4' 등 다른 모델로 변경 가능
     });
 
     const botResponse = completion.choices[0]?.message?.content?.trim();

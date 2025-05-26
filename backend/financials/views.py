@@ -218,3 +218,30 @@ def subscribe_saving_product(request, pk):  # product_pk를 pk로 변경
     if serializer.is_valid(raise_exception=True):
         serializer.save(user=request.user, saving_product=product)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_deposit_subscription(request, pk):
+    """
+    사용자가 가입한 예금 상품을 삭제(가입 취소)합니다.
+    """
+    subscription = get_object_or_404(UserDeposit, pk=pk)
+    if request.user != subscription.user:
+        return Response({'error': '권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
+    
+    subscription.delete()
+    return Response(data={'message': f'예금 가입 정보({pk})가 삭제되었습니다.'}, status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_saving_subscription(request, pk):
+    """
+    사용자가 가입한 적금 상품을 삭제(가입 취소)합니다.
+    """
+    subscription = get_object_or_404(UserSaving, pk=pk)
+    if request.user != subscription.user:
+        return Response({'error': '권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
+
+    subscription.delete()
+    return Response(data={'message': f'적금 가입 정보({pk})가 삭제되었습니다.'}, status=status.HTTP_204_NO_CONTENT)

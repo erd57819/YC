@@ -47,7 +47,7 @@
 <script setup>
 import { ref, nextTick } from 'vue';
 import OpenAI from 'openai';
-import characterIcon from '@/assets/cutebono.png'; 
+import characterIcon from '@/assets/cutebono.png'; // 이 아이콘 경로는 프로젝트에 맞게 수정해야 할 수 있습니다.
 
 const OPENAI_API_KEY = import.meta.env.VITE_OPEN_AI_API_KEY;
 const openai = OPENAI_API_KEY ? new OpenAI({ apiKey: OPENAI_API_KEY, dangerouslyAllowBrowser: true }) : null;
@@ -61,7 +61,7 @@ const chatBody = ref(null);
 const toggleChat = () => {
   isChatOpen.value = !isChatOpen.value;
   if (isChatOpen.value && messages.value.length === 0) {
-    messages.value.push({ sender: 'bot', text: '안녕하세요! 무엇을 도와드릴까요?' });
+    messages.value.push({ sender: 'bot', text: '안녕하세요! YC 금융 챗봇입니다. 무엇을 도와드릴까요?' });
   }
   if(isChatOpen.value) {
     scrollToBottom();
@@ -92,17 +92,39 @@ const sendMessage = async () => {
   isLoading.value = true;
   scrollToBottom();
 
+  // 금융 전문가 역할을 정의하는 상세 시스템 프롬프트
+  const financialSystemPrompt = `
+    You are 'YC 금융 챗봇', a specialized financial assistant. Your role is to provide informative and accurate answers strictly about financial topics.
+
+    Your areas of expertise include:
+    - Financial products (e.g., deposits, savings, funds, loans)
+    - Investment strategies and principles
+    - Asset management concepts
+    - Explanations of the latest economic news and financial terminology
+
+    You must adhere to the following rules:
+    1.  **Never give direct investment advice or recommend specific financial products.** Do not say things like "You should buy this stock" or "This fund is the best option for you."
+    2.  Always include a disclaimer that your answers are for informational purposes only. Remind the user to consult with a qualified professional before making any financial decisions.
+    3.  Use a friendly, clear, and easy-to-understand tone.
+    4.  If asked a question unrelated to finance, you must politely decline by responding with: "죄송하지만, 저는 금융 관련 질문에만 답변할 수 있습니다."
+    5.  Keep your answers concise and to the point.
+    6.  Answer in Korean.
+  `;
+
   try {
     const completion = await openai.chat.completions.create({
       messages: [
-        { role: 'system', content: 'You are a helpful assistant.' },
+        // 'You are a helpful assistant.'를 상세 프롬프트로 교체
+        { role: 'system', content: financialSystemPrompt }, 
+        // 이전 대화 내용을 포함하여 문맥 유지
         ...messages.value.filter(msg => msg.sender === 'user' || msg.sender === 'bot').map(msg => ({
           role: msg.sender === 'user' ? 'user' : 'assistant',
           content: msg.text
         })),
+        // 현재 사용자 메시지 포함
         { role: 'user', content: userMessage }
       ],
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-3.5-turbo', // 필요시 'gpt-4' 등 다른 모델로 변경 가능
     });
 
     const botResponse = completion.choices[0]?.message?.content?.trim();
@@ -131,15 +153,15 @@ const sendMessage = async () => {
 
 .chatbot-toggle-button {
   background-color: transparent; 
-  border: none;                 
-  border-radius: 50%;           
-  width: 60px;                 
-  height: 60px;                 
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  padding: 0;                
+  padding: 0;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
   transition: transform 0.2s ease; 
 }
@@ -149,7 +171,7 @@ const sendMessage = async () => {
 }
 
 .chatbot-button-icon {
-  width: 50px;  
+  width: 50px;
   height: 50px; 
   object-fit: cover;
 }
@@ -237,8 +259,8 @@ const sendMessage = async () => {
 }
 
 .bot-avatar {
-  width: 50px;   
-  height: 50px;  
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   margin-right: 10px; 
   flex-shrink: 0;

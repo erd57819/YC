@@ -2,100 +2,68 @@
   <div class="profile-container my-5">
     <div v-if="accountStore.user" class="profile-layout">
       <div class="sidebar">
+        <h3>{{ accountStore.user.username }}님</h3>
+        <p class="text-muted">프로필 관리</p>
+        <hr>
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link disabled" href="#">포트폴리오 수정</a>
+            <a class="nav-link" 
+               :class="{ active: activeView === 'info' }" 
+               href="#" 
+               @click.prevent="activeView = 'info'">
+              기본 정보 수정
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="#">기본 정보 수정</a>
+            <a class="nav-link" 
+               :class="{ active: activeView === 'portfolio' }" 
+               href="#" 
+               @click.prevent="activeView = 'portfolio'">
+              포트폴리오 수정
+            </a>
           </li>
         </ul>
       </div>
 
       <div class="content">
-        <h3>{{ accountStore.user.username }}님의 프로필 페이지</h3>
-        <h5 class="mt-4 mb-3">기본 정보 수정</h5>
-        
-        <form @submit.prevent="updateProfile">
-          <div class="info-item">
-            <label for="nickname">닉네임</label>
-            <div class="input-group">
-              <input type="text" class="form-control" id="nickname" v-model="editableUser.nickname">
-            </div>
-          </div>
-
-          <div class="info-item">
-            <label for="age">나이</label>
-            <div class="input-group">
-              <input type="number" class="form-control" id="age" v-model.number="editableUser.age">
-            </div>
-          </div>
-
-          <div class="info-item">
-            <label for="salary">연봉 (만원)</label>
-            <div class="input-group">
-              <input type="number" class="form-control" id="salary" v-model.number="editableUser.salary">
-            </div>
-          </div>
-
-          <div class="info-item">
-            <label for="wealth">자산 (만원)</label>
-            <div class="input-group">
-              <input type="number" class="form-control" id="wealth" v-model.number="editableUser.wealth">
-            </div>
-          </div>
-          
-          <div class="d-flex justify-content-end mt-4">
-            <button type="submit" class="btn btn-primary">수정 완료</button>
-          </div>
-        </form>
+        <component :is="currentViewComponent" />
       </div>
     </div>
     <div v-else class="text-center">
       <p>로그인 후 이용해주세요.</p>
+      <RouterLink :to="{ name: 'LogInView' }">로그인 페이지로 이동</RouterLink>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, computed, defineAsyncComponent } from 'vue';
 import { useAccountStore } from '@/stores/accounts';
 
 const accountStore = useAccountStore();
-const editableUser = ref({
-  nickname: '',
-  age: 0,
-  salary: 0,
-  wealth: 0,
-});
+const activeView = ref('info'); // 기본으로 '기본 정보 수정'을 보여줌
 
-// 컴포넌트가 마운트되거나 user 정보가 변경될 때 editableUser를 최신화합니다.
+// 동적 컴포넌트 로딩
+const UserInfoEdit = defineAsyncComponent(() => import('@/components/UserInfoEdit.vue'));
+const PortfolioView = defineAsyncComponent(() => import('@/components/PortfolioView.vue'));
+
 onMounted(() => {
-  if (accountStore.user) {
-    Object.assign(editableUser.value, accountStore.user);
-  }
+  // 컴포넌트 마운트 시 사용자 정보를 가져옵니다.
+  accountStore.fetchUser();
 });
 
-// 로그인 상태가 변경될 때 (페이지 새로고침 등) 다시 데이터를 할당합니다.
-watch(() => accountStore.user, (newUser) => {
-  if (newUser) {
-    Object.assign(editableUser.value, newUser);
+// activeView 값에 따라 현재 보여줄 컴포넌트를 결정
+const currentViewComponent = computed(() => {
+  if (activeView.value === 'info') {
+    return UserInfoEdit;
+  } else {
+    return PortfolioView;
   }
-}, { immediate: true });
-
-
-const updateProfile = () => {
-  const payload = {
-    nickname: editableUser.value.nickname,
-    age: editableUser.value.age,
-    salary: editableUser.value.salary,
-    wealth: editableUser.value.wealth,
-  };
-  accountStore.updateUser(payload);
-};
+});
 </script>
 
 <style scoped>
+/* 사용자가 제공한 스타일과 동일하게 유지 */
 .profile-container {
   max-width: 960px;
   margin: auto;
@@ -104,56 +72,27 @@ const updateProfile = () => {
   display: flex;
 }
 .sidebar {
-  flex: 0 0 200px;
+  flex: 0 0 220px;
   border-right: 1px solid #dee2e6;
-  padding-right: 20px;
+  padding: 20px;
 }
 .sidebar .nav-link {
   color: #333;
-  font-weight: bold;
+  font-weight: 500;
+  padding: 0.75rem 1rem;
+  border-radius: 0.25rem;
 }
 .sidebar .nav-link.active {
   color: #0d6efd;
   background-color: #e9ecef;
+  font-weight: bold;
 }
-.sidebar .nav-link.disabled {
-  color: #adb5bd;
+.sidebar .nav-link:not(.active):hover {
+  background-color: #f8f9fa;
 }
 
 .content {
   flex-grow: 1;
   padding-left: 30px;
-}
-
-.info-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.info-item label {
-  width: 100px;
-  font-weight: bold;
-  color: #555;
-  flex-shrink: 0;
-}
-
-.info-item .input-group {
-  flex-grow: 1;
-}
-
-.form-control[readonly] {
-  background-color: #f8f9fa;
-  cursor: not-allowed;
-}
-
-.btn-primary {
-  background-color: #34495e;
-  border-color: #34495e;
-}
-
-.btn-primary:hover {
-  background-color: #2c3e50;
-  border-color: #2c3e50;
 }
 </style>

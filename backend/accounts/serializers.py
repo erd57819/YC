@@ -2,6 +2,7 @@ from django.db import transaction
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from dj_rest_auth.registration.serializers import RegisterSerializer
+from financials.serializers import UserDepositSerializer, UserSavingSerializer
 
 User = get_user_model()
 
@@ -33,7 +34,22 @@ class CustomRegisterSerializer(RegisterSerializer):
         return user
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    subscribed_deposits = UserDepositSerializer(source='userdeposit_set', many=True, read_only=True)
+    subscribed_savings = UserSavingSerializer(source='usersaving_set', many=True, read_only=True)
+
     class Meta:
         model = User
-        fields = ('id', 'username', 'nickname', 'age', 'salary', 'wealth', 'created_at', 'updated_at') # 'user_id' -> 'id'
+        # Meta.fields에 'subscribed_deposits'와 'subscribed_savings'를 명시적으로 추가해야 합니다.
+        fields = (
+            'id', 
+            'username', 
+            'nickname', 
+            'age', 
+            'salary', 
+            'wealth', 
+            'subscribed_deposits',  # 여기에 추가
+            'subscribed_savings',   # 여기에 추가
+            'created_at', 
+            'updated_at'
+        )
         read_only_fields = ('username', 'created_at', 'updated_at')

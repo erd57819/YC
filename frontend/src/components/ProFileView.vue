@@ -41,7 +41,7 @@ import { ref, onMounted, computed, defineAsyncComponent } from 'vue';
 import { useAccountStore } from '@/stores/accounts';
 
 const accountStore = useAccountStore();
-const activeView = ref('info');
+const activeView = ref('portfolio');
 
 // 경로 수정: components -> views
 const UserInfoEdit = defineAsyncComponent(() => import('@/views/UserInfoEdit.vue'));

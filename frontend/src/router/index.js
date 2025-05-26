@@ -15,7 +15,7 @@ import SavingProductDetailView from '@/views/SavingProductDetailView.vue';
 import SavingProductsView from '@/views/SavingProductsView.vue';
 import DepositProductDetailView from '@/views/DepositProductDetailView.vue';
 import DepositProductsView from '@/views/DepositProductsView.vue';
-import ProFileView from '@/views/ProFileView.vue';
+import ProFileView from '@/components/ProFileView.vue';
 import FinancialProductsCompareView from '@/views/FinancialProductsCompareView.vue';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

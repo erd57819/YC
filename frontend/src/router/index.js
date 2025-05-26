@@ -1,16 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import MainView from '@/views/MainView.vue'; //
-import ArticleView from '@/views/ArticleView.vue'; //
-import DetailView from '@/views/DetailView.vue'; //
-import CreateView from '@/views/CreateView.vue'; //
-import SignUpView from '@/views/SignUpView.vue'; //
-import LogInView from '@/views/LogInView.vue'; //
-import BankFinder from '@/views/BankFinder.vue'; 
-import SearchView from '@/views/SearchView.vue'; //
+import MainView from '@/views/MainView.vue';
+import ArticleView from '@/views/ArticleView.vue';
+import DetailView from '@/views/DetailView.vue';
+import CreateView from '@/views/CreateView.vue';
+import SignUpView from '@/views/SignUpView.vue';
+import LogInView from '@/views/LogInView.vue';
+import BankFinder from '@/views/BankFinder.vue';
+import SearchView from '@/views/SearchView.vue';
 import VideoDetailView from '@/views/VideoDetailView.vue';
-import ArticleEditView from '@/views/ArticleEditView.vue'; 
+import ArticleEditView from '@/views/ArticleEditView.vue';
 import SilverView from '@/views/SilverView.vue';
 import GoldView from '@/views/GoldView.vue';
+import SavingProductDetailView from '@/views/SavingProductDetailView.vue';
+import SavingProductsView from '@/views/SavingProductsView.vue';
+import DepositProductDetailView from '@/views/DepositProductDetailView.vue';
+import DepositProductsView from '@/views/DepositProductsView.vue';
+import ProFileView from '@/views/ProFileView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,7 +33,7 @@ const router = createRouter({
     {
       path: '/articles/:id/edit',
       name: 'ArticleEditView',
-      component: ArticleEditView 
+      component: ArticleEditView
     },
     {
       path: '/articles/:id',
@@ -50,7 +55,7 @@ const router = createRouter({
       name: 'LogInView',
       component: LogInView
     },
-    { 
+    {
       path: '/bank-finder',
       name: 'BankFinder',
       component: BankFinder
@@ -60,10 +65,12 @@ const router = createRouter({
       name: 'SearchView',
       component: SearchView
     },
-    { path: '/video/:id',
+    {
+      path: '/video/:id',
       name: 'video',
       component: VideoDetailView,
-      props: true },
+      props: true
+    },
     {
       path: '/gold',
       name: 'GoldView',
@@ -72,9 +79,34 @@ const router = createRouter({
     {
       path: '/silver',
       name: 'SilverView',
-      component: SilverView 
+      component: SilverView
     },
-
+    {
+      path: '/deposit-products',
+      name: 'DepositProductsView',
+      component: DepositProductsView
+    },
+    {
+      path: '/deposit-products/:id',
+      name: 'DepositProductDetailView',
+      component: DepositProductDetailView
+    },
+    {
+      path: '/saving-products',
+      name: 'SavingProductsView',
+      component: SavingProductsView
+    },
+    {
+      path: '/saving-products/:id',
+      name: 'SavingProductDetailView',
+      component: SavingProductDetailView
+    },
+    {
+      path: '/profile',
+      name: 'ProFileView',
+      component: ProFileView
+    },
+    
   ]
 });
 

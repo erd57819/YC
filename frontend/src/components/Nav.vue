@@ -25,7 +25,6 @@
           <li class="nav-item">
             <RouterLink class="nav-link" :to="{ name: 'SavingProductsView' }">적금 상품</RouterLink>
           </li>
-          
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item" v-if="!accountStore.isLogin">
@@ -38,6 +37,9 @@
             <a class="nav-link welcome-message" href="#">
               <strong>{{ accountStore.user?.nickname }}</strong>님 환영합니다!
             </a>
+          </li>
+          <li class="nav-item" v-if="accountStore.isLogin">
+            <RouterLink class="nav-link" :to="{ name: 'ProFileView' }">프로필</RouterLink>
           </li>
           <li class="nav-item" v-if="accountStore.isLogin">
             <a class="nav-link logout-link" href="#" @click.prevent="logOut">로그아웃</a>

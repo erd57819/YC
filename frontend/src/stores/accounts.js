@@ -50,7 +50,7 @@ export const useAccountStore = defineStore('account', () => {
       .then(async (res) => {
         token.value = res.data.key
         await fetchUser() // 로그인 직후 사용자 정보 가져오기
-        router.push({ name: 'ArticleView' })
+        router.push({ name: 'MainView' })
       })
       .catch(err => console.error('로그인 실패:', err.response.data))
   }

@@ -16,7 +16,7 @@ import SavingProductsView from '@/views/SavingProductsView.vue';
 import DepositProductDetailView from '@/views/DepositProductDetailView.vue';
 import DepositProductsView from '@/views/DepositProductsView.vue';
 import ProFileView from '@/views/ProFileView.vue';
-
+import FinancialProductsCompareView from '@/views/FinancialProductsCompareView.vue';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -81,25 +81,41 @@ const router = createRouter({
       name: 'SilverView',
       component: SilverView
     },
-    {
-      path: '/deposit-products',
-      name: 'DepositProductsView',
-      component: DepositProductsView
-    },
-    {
-      path: '/deposit-products/:id',
-      name: 'DepositProductDetailView',
-      component: DepositProductDetailView
-    },
-    {
-      path: '/saving-products',
-      name: 'SavingProductsView',
-      component: SavingProductsView
-    },
-    {
-      path: '/saving-products/:id',
-      name: 'SavingProductDetailView',
-      component: SavingProductDetailView
+    { 
+      path: '/financial-products-compare',
+      name: 'FinancialProductsCompareView',
+      component: FinancialProductsCompareView,
+      children: [
+        { // 기본적으로 예금 상품 탭이 먼저 보이도록 설정
+          path: '', // 부모 경로와 동일
+          redirect: { name: 'DepositProductsView' }
+        },
+        { // 예금 상품 목록 뷰
+          path: 'deposits',
+          name: 'DepositProductsView',
+          component: DepositProductsView
+        },
+        // 예금 상품 상세 뷰
+        {
+          path: 'deposits/:id',
+          name: 'DepositProductDetailView',
+          component: DepositProductDetailView,
+          props: true
+        },
+        // 적금 상품 목록 뷰
+        {
+          path: 'savings',
+          name: 'SavingProductsView',
+          component: SavingProductsView
+        },
+        // 적금 상품 상세 뷰
+        {
+          path: 'savings/:id',
+          name: 'SavingProductDetailView',
+          component: SavingProductDetailView,
+          props: true
+        },
+      ]
     },
     {
       path: '/profile',

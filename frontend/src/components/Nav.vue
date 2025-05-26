@@ -10,6 +10,15 @@
           <li class="nav-item">
             <RouterLink class="nav-link" :to="{ name: 'ArticleView' }">Articles</RouterLink>
           </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              예금비교
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><RouterLink class="dropdown-item" :to="{ name: 'DepositProductsView' }">예금 상품</RouterLink></li>
+              <li><RouterLink class="dropdown-item" :to="{ name: 'SavingProductsView' }">적금 상품</RouterLink></li>
+            </ul>
+          </li>
           <li class="nav-item">
             <RouterLink class="nav-link" :to="{ name: 'BankFinder' }">은행찾기</RouterLink>
           </li>
@@ -19,12 +28,12 @@
           <li class="nav-item">
             <RouterLink class="nav-link" :to="{ name: 'GoldView' }">현물 시세</RouterLink>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <RouterLink class="nav-link" :to="{ name: 'DepositProductsView' }">예금 상품</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink class="nav-link" :to="{ name: 'SavingProductsView' }">적금 상품</RouterLink>
-          </li>
+          </li> -->
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item" v-if="!accountStore.isLogin">

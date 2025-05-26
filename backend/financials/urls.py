@@ -8,8 +8,10 @@ urlpatterns = [
     # 예금 상품 목록 및 상세 정보 URL
     path('deposit-products/', views.deposit_products),
     path('deposit-products/<int:pk>/', views.deposit_product_detail),
+    path('deposit-products/<int:pk>/subscribe/', views.subscribe_deposit_product), # 예금 상품 가입 URL
 
     # 적금 상품 목록 및 상세 정보 URL
     path('saving-products/', views.saving_products),
     path('saving-products/<int:pk>/', views.saving_product_detail),
+    path('saving-products/<int:pk>/subscribe/', views.subscribe_saving_product), # 적금 상품 가입 URL
 ]

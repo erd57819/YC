@@ -39,7 +39,7 @@ class UserDepositSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserDeposit
         fields = '__all__'
-        read_only_fields = ('user',)
+        read_only_fields = ('user', 'deposit_product')
 
 # 사용자 적금 가입 정보
 class UserSavingSerializer(serializers.ModelSerializer):
@@ -48,4 +48,4 @@ class UserSavingSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserSaving
         fields = '__all__'
-        read_only_fields = ('user',)
+        read_only_fields = ('user','saving_product')

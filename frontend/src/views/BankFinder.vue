@@ -307,7 +307,7 @@ onMounted(async () => {
 }
 
 .search-button:disabled {
-  background-color: #6c757d;
+  background-color: #3c9cf0;
   cursor: not-allowed;
 }
 

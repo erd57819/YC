@@ -18,7 +18,7 @@ import ChatbotButton from '@/components/ChatbotButton.vue';
 <style>
 
 body {
-  background-color: #f5f6f7; 
+  background-color: #f8f8f8; 
 }
 
 </style>

@@ -92,7 +92,7 @@ export const useAccountStore = defineStore('account', () => {
     } finally {
       token.value = null;
       user.value = null;
-      router.push({ name: 'ArticleView' }); // 로그아웃 후 게시글 목록 페이지로 이동
+      router.push({ name: 'MainView' }); // 로그아웃 후 게시글 목록 페이지로 이동
     }
   };
 

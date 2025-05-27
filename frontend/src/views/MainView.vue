@@ -48,8 +48,8 @@ const accountStore = useAccountStore();
 }
 
 .character-image-large {
-  width: 200px;
-  max-width: 80%;
+  width: 500px;
+  max-width: 100%;
   height: auto;
   margin-bottom: 20px;
 }

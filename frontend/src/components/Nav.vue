@@ -47,6 +47,9 @@
           <li class="nav-item" v-if="accountStore.isLogin">
             <a class="nav-link logout-link" href="#" @click.prevent="logOut">로그아웃</a>
           </li>
+          <!-- <li class="nav-item" v-if="accountStore.isLogin">
+              <RouterLink class="nav-link" :to="{ name: 'AIRecommendationView' }">AI 상품 추천</RouterLink>
+          </li> -->
         </ul>
       </div>
     </div>

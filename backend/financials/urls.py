@@ -14,6 +14,7 @@ urlpatterns = [
     path('saving-products/', views.saving_products),
     path('saving-products/<int:pk>/', views.saving_product_detail),
     path('saving-products/<int:pk>/subscribe/', views.subscribe_saving_product), # 적금 상품 가입 URL
-    path('subscriptions/deposits/<int:pk>/', views.delete_deposit_subscription),
-    path('subscriptions/savings/<int:pk>/', views.delete_saving_subscription),
+    # path('subscriptions/deposits/<int:pk>/', views.delete_deposit_subscription),
+    # path('subscriptions/savings/<int:pk>/', views.delete_saving_subscription),
+    path('ai-recommendations/', views.ai_product_recommendations, name='ai_product_recommendations'),
 ]

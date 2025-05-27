@@ -17,6 +17,7 @@ import DepositProductDetailView from '@/views/DepositProductDetailView.vue';
 import DepositProductsView from '@/views/DepositProductsView.vue';
 import ProFileView from '@/components/ProFileView.vue';
 import FinancialProductsCompareView from '@/views/FinancialProductsCompareView.vue';
+import AIRecommendationView from '@/views/AIRecommendationView.vue';
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -122,7 +123,11 @@ const router = createRouter({
       name: 'ProFileView',
       component: ProFileView
     },
-    
+    { // AI 추천 페이지 라우트 추가
+      path: '/ai-recommendations',
+      name: 'AIRecommendationView',
+      component: AIRecommendationView
+    },
   ]
 });
 

@@ -157,6 +157,29 @@ export const useFinancialStore = defineStore('financial', () => {
       recommendedProducts.value = []; // 오류 발생 시 추천 목록을 비웁니다.
     }
   };
+// 상품 가입 취소(삭제) 함수
+const deleteSubscription = async (type, subscriptionId) => {
+  const accountStore = useAccountStore();
+
+  if (!accountStore.token) {
+    alert('로그인이 필요합니다.');
+    return;
+  } 
+  const typeName = type === 'deposit' ? '예금' : '적금';
+  const url = `${API_URL}/financials/subscriptions/${type}s/${subscriptionId}/`;
+
+  try {
+    await axios.delete(url, {
+      headers: { Authorization: `Token ${accountStore.token}` },
+    });
+    alert(`${typeName} 상품 가입을 취소했습니다.`);
+
+    accountStore.fetchUser();
+  } catch (error) {
+    console.error(`${typeName} 상품 취소 실패:`, error.response?.data || error.message);
+    alert(`${typeName} 상품 취소에 실패했습니다: ${error.response?.data?.detail || error.message}`);
+  }
+};
 
   return {
     API_URL,
@@ -176,5 +199,6 @@ export const useFinancialStore = defineStore('financial', () => {
     subscribeDepositProduct, //
     subscribeSavingProduct, //
     fetchAIRecommendations,
+    deleteSubscription,
   };
 }, { persist: true }); //

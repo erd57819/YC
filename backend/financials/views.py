@@ -330,3 +330,30 @@ def ai_product_recommendations(request):
         else: return Response([], status=status.HTTP_200_OK)
     except ValueError as ve: print(f"설정 오류: {str(ve)}"); return Response({"error": str(ve)}, status.HTTP_500_INTERNAL_SERVER_ERROR)
     except Exception as e: print(f"AI 추천 서비스 오류: {e}"); return Response({"error": f"AI 추천 중 오류: {str(e)}"}, status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_deposit_subscription(request, pk):
+    """
+    사용자가 가입한 예금 상품을 삭제(가입 취소)합니다.
+    """
+    subscription = get_object_or_404(UserDeposit, pk=pk)
+    if request.user != subscription.user:
+        return Response({'error': '권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
+    
+    subscription.delete()
+    return Response(data={'message': f'예금 가입 정보({pk})가 삭제되었습니다.'}, status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['DELETE'])
+
+def delete_saving_subscription(request, pk):
+    """
+    사용자가 가입한 적금 상품을 삭제(가입 취소)합니다.
+    """
+    subscription = get_object_or_404(UserSaving, pk=pk)
+    if request.user != subscription.user:
+        return Response({'error': '권한이 없습니다.'}, status=status.HTTP_403_FORBIDDEN)
+
+    subscription.delete()
+    return Response(data={'message': f'적금 가입 정보({pk})가 삭제되었습니다.'}, status=status.HTTP_204_NO_CONTENT)

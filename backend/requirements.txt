@@ -13,6 +13,7 @@ Django==4.2.16
 django-allauth==0.61.1
 django-cors-headers==4.6.0
 djangorestframework==3.15.2
+dotenv==0.9.9
 h11==0.16.0
 httpcore==1.0.9
 httpx==0.28.1
@@ -24,6 +25,7 @@ pycparser==2.22
 pydantic==2.11.5
 pydantic_core==2.33.2
 PyJWT==2.9.0
+python-dotenv==1.1.0
 python3-openid==3.2.0
 requests==2.32.3
 requests-oauthlib==2.0.0

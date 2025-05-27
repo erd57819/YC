@@ -59,13 +59,13 @@ const accountStore = useAccountStore();
   font-size: 2.2em;
   font-weight: bold;
   margin-bottom: 10px;
-  color: #333;
+  color: #0a0a0a;
 }
 
 .logged-out-view .sub-message,
 .logged-in-view .sub-message {
   font-size: 1.1em;
-  color: #555;
+  color: #030303;
 }
 
 .logged-in-view {

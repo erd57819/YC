@@ -4,28 +4,28 @@
       <div class="col-md-5">
         <div class="card shadow-sm">
           <div class="card-body p-4">
-            <h1 class="card-title text-center mb-4">Log In</h1>
+            <h1 class="card-title text-center mb-4">로그인</h1>
             <form @submit.prevent="submitLogIn" class="needs-validation" novalidate>
               <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
+                <label for="username" class="form-label">아이디</label>
                 <input type="text" class="form-control" id="username" v-model.trim="username" required>
                 <div class="invalid-feedback">
-                  Please enter your username.
+                  아이디를 입력해주세요.
                 </div>
               </div>
               <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
+                <label for="password" class="form-label">비밀번호</label>
                 <input type="password" class="form-control" id="password" v-model.trim="password" required>
                 <div class="invalid-feedback">
-                  Please enter your password.
+                  비밀번호를 입력해주세요.
                 </div>
               </div>
               <div class="d-grid">
-                <button type="submit" class="btn btn-primary btn-lg">Log In</button>
+                <button type="submit" class="btn btn-primary btn-lg">로그인</button>
               </div>
             </form>
             <p class="text-center mt-3">
-              Don't have an account? <RouterLink :to="{ name: 'SignUpView' }">Sign Up</RouterLink>
+              계정이 없으신가요? <RouterLink :to="{ name: 'SignUpView' }">회원가입</RouterLink>
             </p>
           </div>
         </div>

@@ -4,64 +4,62 @@
       <div class="col-md-6">
         <div class="card shadow-sm">
           <div class="card-body p-4">
-            <h1 class="card-title text-center mb-4">Sign Up</h1>
+            <h1 class="card-title text-center mb-4">회원가입</h1>
             <form @submit.prevent="submitSignUp" class="needs-validation" novalidate>
               <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
+                <label for="username" class="form-label">아이디</label>
                 <input type="text" class="form-control" id="username" v-model.trim="username" required>
                 <div class="invalid-feedback">
-                  Please choose a username.
+                  아이디를 입력해주세요.
                 </div>
               </div>
               
               <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
+                <label for="password" class="form-label">비밀번호</label>
                 <input type="password" class="form-control" id="password" v-model.trim="password" required minlength="8">
                 <div class="invalid-feedback">
-                  Password must be at least 8 characters.
+                  비밀번호를 입력해주세요. (최소 8자)
                 </div>
               </div>
 
               <div class="mb-3">
-                <label for="confirmPassword" class="form-label">Confirm Password</label>
+                <label for="confirmPassword" class="form-label">비밀번호확인</label>
                 <input type="password" class="form-control" id="confirmPassword" v-model.trim="confirmPassword" required>
                 <div class="invalid-feedback" v-if="password !== confirmPassword && confirmPassword">
-                  Passwords do not match.
+                  비밀번호가 일치하지 않습니다.
                 </div>
                  <div class="invalid-feedback" v-else>
-                  Please confirm your password.
+                  비밀번호를 다시 입력해주세요.
                 </div>
               </div>
 
-              <hr class="my-4">
-              <p class="text-muted text-center">Optional Information</p>
 
               <div class="mb-3">
-                <label for="nickname" class="form-label">Nickname</label>
+                <label for="nickname" class="form-label">닉네임</label>
                 <input type="text" class="form-control" id="nickname" v-model.trim="nickname">
               </div>
 
               <div class="mb-3">
-                <label for="age" class="form-label">Age</label>
+                <label for="age" class="form-label">나이</label>
                 <input type="number" class="form-control" id="age" v-model.number="age" min="1">
               </div>
 
               <div class="mb-3">
-                <label for="salary" class="form-label">Annual Salary (in KRW)</label>
+                <label for="salary" class="form-label">연봉</label>
                 <input type="number" class="form-control" id="salary" v-model.number="salary" min="0">
               </div>
 
               <div class="mb-3">
-                <label for="wealth" class="form-label">Total Wealth (in KRW)</label>
+                <label for="wealth" class="form-label">총 자산</label>
                 <input type="number" class="form-control" id="wealth" v-model.number="wealth" min="0">
               </div>
 
               <div class="d-grid mt-4">
-                <button type="submit" class="btn btn-primary btn-lg">Sign Up</button>
+                <button type="submit" class="btn btn-primary btn-lg">회원가입</button>
               </div>
             </form>
             <p class="text-center mt-3">
-              Already have an account? <RouterLink :to="{ name: 'LogInView' }">Log In</RouterLink>
+              계정이 있으신가요? <RouterLink :to="{ name: 'LogInView' }">로그인</RouterLink>
             </p>
           </div>
         </div>

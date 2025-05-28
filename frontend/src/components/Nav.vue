@@ -8,7 +8,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <RouterLink class="nav-link" :to="{ name: 'ArticleView' }">Articles</RouterLink>
+            <RouterLink class="nav-link" :to="{ name: 'ArticleView' }">게시판</RouterLink>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">

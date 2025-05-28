@@ -1,22 +1,22 @@
 <template>
   <div class="create-view">
-    <h1 class="mb-4">Create New Article</h1>
+    <h1 class="mb-4">개시글 작성</h1>
     <form @submit.prevent="createArticleHandler" class="needs-validation" novalidate>
       <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
+        <label for="title" class="form-label">제목</label>
         <input type="text" class="form-control" id="title" v-model.trim="title" required>
         <div class="invalid-feedback">
           Please enter a title.
         </div>
       </div>
       <div class="mb-3">
-        <label for="content" class="form-label">Content</label>
+        <label for="content" class="form-label">내용</label>
         <textarea class="form-control" id="content" rows="10" v-model.trim="content" required></textarea>
         <div class="invalid-feedback">
           Please enter some content.
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary">작성</button>
     </form>
   </div>
 </template>

@@ -1,17 +1,17 @@
 <template>
   <div class="container mt-5">
-    <h1>Edit Article</h1>
+    <h1>개시글 수정</h1>
     <form v-if="articleToEdit" @submit.prevent="submitUpdate">
       <div class="mb-3">
-        <label for="title" class="form-label">Title</label>
+        <label for="title" class="form-label">제목</label>
         <input type="text" class="form-control" id="title" v-model="formData.title" required>
       </div>
       <div class="mb-3">
-        <label for="content" class="form-label">Content</label>
+        <label for="content" class="form-label">내용</label>
         <textarea class="form-control" id="content" v-model="formData.content" rows="5" required></textarea>
       </div>
-      <button type="submit" class="btn btn-primary me-2">Update Article</button>
-      <button type="button" class="btn btn-secondary" @click="cancelEdit">Cancel</button>
+      <button type="submit" class="btn btn-primary me-2">수정완료</button>
+      <button type="button" class="btn btn-secondary" @click="cancelEdit">취소</button>
     </form>
     <div v-else class="alert alert-info">
       Loading article data...
